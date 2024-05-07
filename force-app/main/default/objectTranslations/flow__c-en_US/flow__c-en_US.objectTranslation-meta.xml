@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>flow</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>flows</value>
+    </caseValues>
+    <layouts>
+        <layout>for creating records in 1 or multiple sobjects</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>practice Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>to delete record</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>to update record using screen flow</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label></label>
+        <name>delRecord</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>dualRec</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>newRecord</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>updateRecord</name>
+    </webLinks>
+</CustomObjectTranslation>

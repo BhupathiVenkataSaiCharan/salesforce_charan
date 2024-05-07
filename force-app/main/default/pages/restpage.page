@@ -1,0 +1,16 @@
+<apex:page controller="IntegrateAccountRestController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Display Records" action="{!getRecords}"/>
+            </apex:pageBlockButtons>
+            <apex:outputText value="Response is {!responses}"/>
+            <!-- Page block table to display records -->
+            <apex:pageBlockTable value="{!records}" var="r" id="recordsTable">
+                <!-- Define your columns here -->
+                <apex:column value="{!r.Name}" headerValue="Record Name"/>
+                <!-- Add more columns as needed -->
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

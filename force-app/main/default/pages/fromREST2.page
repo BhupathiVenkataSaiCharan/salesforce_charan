@@ -1,0 +1,8 @@
+<apex:page controller="IntegrateAccountRestController">
+  <apex:form >
+      Account Name<apex:inputText value="{!a.name}"/><br/><br/>
+      Phone number<apex:inputText value="{!a.phone}"/><br/><br/>
+      <apex:commandbutton value="submit" action="{!Submit}"/>
+      <apex:outputText value="{!responses}"></apex:outputText>
+  </apex:form>
+</apex:page>

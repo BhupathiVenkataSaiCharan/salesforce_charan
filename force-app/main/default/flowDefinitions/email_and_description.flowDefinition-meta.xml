@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>1. When creating a contact if description is not added then give description as &quot;Test Description&quot;
+2. Make the email field mandatory using flows</description>
+    <masterLabel>email and description</masterLabel>
+</FlowDefinition>
