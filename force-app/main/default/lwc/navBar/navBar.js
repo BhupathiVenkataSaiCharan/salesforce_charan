@@ -2,12 +2,16 @@ import { LightningElement } from 'lwc';
 
 export default class NavBar extends LightningElement {
     userName;
+    userEmail;
 
-    handleChange(event){
+    handleUser(event){
         this.userName=event.target.value;
     }
+    handleEmail(event){
+        this.userEmail=event.target.value;
+    }
 
-    handleClick(){
-        alert('Username is :::' +this.userName);
+    handleSubmit(){
+        alert('Username is ::: ' +this.userName +'userEmail is::: ' +this.userEmail);
     }
 }

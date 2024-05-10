@@ -165,3 +165,71 @@ global class abc implements Database.Batchable<sobject>,Schedulable{
         Database.executeBatch(obj);
     }
 }
+
+
+
+
+public static void addAccCon(List<Account> accList){
+
+    Map<String, String> accMap=new Map<String, String>();
+    for(Account acc: accList){
+        accMap.put(acc.Id,acc.Phone);
+    }
+
+    List<Contact> relatedContacts = [SELECT Id,Name,AccountId from Contact WHERE AccountId IN :accMap.keyset()];
+    for(Contact con: relatedContacts){
+        con.Phone=accMap.get(con.AccountId);
+    }
+    update relatedContacts;
+}
+
+
+
+global class abc1 implements Database.Batchable<sobject>{
+
+    global Database.QueryLocator start(Database.BatchableContext BC){
+        return Database.getQueryLocator([SELECT Id,Name from Contact]);
+    }
+    global void execute(Database.BatchableContext BC, List<Contact> conList){
+        List<Contact> newList = new List<Contact>();
+        for(Contact con:conList){
+            con.Description='new description';
+            newList.add(con);
+        }
+        update newList;
+    }
+    global void finish(Database.BatchableContext BC){
+        system.debug('finished');
+    }
+
+    global void execute(SchedulableContext SC){
+        abc1 obj=new abc1();
+        Database.executeBatch(obj);
+    }
+}
+
+
+
+
+global class demo implements Database.Batchable<sobject>{
+
+    global Database.QueryLocator start(Database.BatchableContext BC){
+        return Database.getQueryLocator([SELECT id,name from account]);
+    }
+    global void execute(Database.BatchableContext BC, List<Account> accList){
+        
+        List<Account> fullList=new List<Account>();
+        for(Account acc:accList){
+            acc.description='new desc';
+            fullList.add(acc);
+        }
+        update fullList;
+    }
+    global void finish(Database.BatchableContext BC){
+        system.debug('finish');
+    }
+    global void execute(SchedulableContext SC){
+        demo obj=new demo();
+        Database.executeBatch(obj);
+    }
+}

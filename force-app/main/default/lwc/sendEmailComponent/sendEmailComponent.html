@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Send Email">
+        <div class="slds-p-around_medium">
+            <!-- Input fields for email address, subject, and message -->
+            <lightning-input label="To" type="email" value={toEmail} onchange={handleToEmailChange}></lightning-input>
+            <lightning-input label="Subject" type="text" value={subject} onchange={handleSubjectChange}></lightning-input>
+            <lightning-textarea label="Message" value={message} onchange={handleMessageChange}></lightning-textarea>
+            <div class="slds-m-top_medium">
+                <!-- Button to send the email -->
+                <lightning-button label="✉️ Send" variant="brand" onclick={sendEmail}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>
