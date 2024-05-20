@@ -1,0 +1,64 @@
+.nav-bar-container{
+    width: 98vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0 1rem;
+}
+
+.menu-button{
+    display: none;       
+}
+.nav-bar{
+    display: flex;
+    width: 95vw;
+    height: 90px;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-direction: row;
+}
+.portfolio-btn {
+    position: relative;
+}
+
+.dropdown-container {
+    display: none;
+    position: relative;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-container {
+    display: flex;
+}
+
+.dropdown-container button {
+    padding: 1rem;
+    text-align: left;
+    color: black;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+@media (max-width: 425px){
+    .menu-button{
+        display: block;
+    }
+    .nav-bar{
+        display: none;
+        background-color: rebeccapurple;
+        width: 300px;
+        height: 500px;
+    }
+    .active{
+        display: flex;
+        background-color: red;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}

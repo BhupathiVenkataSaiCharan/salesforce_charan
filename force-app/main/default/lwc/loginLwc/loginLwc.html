@@ -1,0 +1,19 @@
+<template>
+    <div class="slds-m-top_medium slds-m-bottom_x-large">
+    
+        <!-- Default/basic -->
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" label="UserName" name="userName" 
+                placeholder="Enter your UserName"
+                onchange={handleChange}>
+            </lightning-input>
+            <lightning-input type="text" label="Password" name="password"
+                placeholder="Enter your Password"
+                onchange={handleChange}>
+            </lightning-input>
+
+            <lightning-button variant="brand" label="Brand" title="Primary action" 
+                        onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </div>
+</template>

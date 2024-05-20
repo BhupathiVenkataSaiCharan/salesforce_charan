@@ -1,17 +1,39 @@
 import { LightningElement } from 'lwc';
+import {NavigationMixin} from "lightning/navigation";
 
-export default class NavBar extends LightningElement {
-    userName;
-    userEmail;
+export default class NavBar extends NavigationMixin(LightningElement) {
 
-    handleUser(event){
-        this.userName=event.target.value;
+    
+    navigateToPages(event){
+        const button=event.target;
+        console.log(button.name);
+        this.navigateTo(button.name)
     }
-    handleEmail(event){
-        this.userEmail=event.target.value;
+    
+    
+    
+    navigateTo(pageName){
+        this[NavigationMixin.Navigate]({
+            type:'comm__namedPage',
+            attributes:{
+                name:pageName
+            }
+        });
     }
 
-    handleSubmit(){
-        alert('Username is ::: ' +this.userName +'userEmail is::: ' +this.userEmail);
+    menuClickHandler(){
+        var navBarBlock=this.template.querySelector('.nav-bar');
+        console.log('menuClickHandler. navBarBlock: ',navBarBlock.classList);
+        // navBarBlock.classList.add('active')
+        
+        if(navBarBlock.classList.contains('active')){
+            console.log('menu active');
+            navBarBlock.classList.remove('active') 
+            console.log('menuClickHandler. menuActive: ',navBarBlock.classList);
+        }else{
+            console.log('menu inactive');
+            navBarBlock.classList.add('active')
+            console.log('menuClickHandler. menuActive: ',navBarBlock.classList);
+        }
     }
 }

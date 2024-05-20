@@ -14,11 +14,11 @@ public class AccountTriggerHandler {
  }
  
  //when an account is updated with industry as banking create a contact
- public static void createContactWhenAccountisUpdated(List<Account> newAccounts, Map<Id, Account> oldaccountMap){
+ public static void createContactWhenAccountisUpdated(List<Account> accList, Map<Id, Account> oldaccountMap){
      system.debug('createContactWhenAccountisUpdated');
      try{
          List<Contact> conList=new List<Contact>();
-         for(Account acc:newAccounts){
+         for(Account acc:accList){
              //get the old value of industry field of current from trriger Old
              String tempIndustaryOldValue = oldaccountMap.get(acc.Id).Industry;
              String tempIndustaryNewValue = acc.Industry;
@@ -245,5 +245,56 @@ public class AccountTriggerHandler {
         }
     }
  }
+ public static void accRating(List<Account> accList){
 
+    for(Account acc:accList){
+        if(acc.Industry == 'Banking'){
+            acc.Rating = 'Hot';
+        }else{
+            acc.Rating = 'Warm';
+        }
+    }
+ }
+
+ //check for same accounts if name matching account present add new account as assoictaed account for old acc contacts
+ //longer version by aman
+//  public static void associateContactsWithExistingAccount( Map<Id, Account> newAccMap) {
+//     Map<String, String> accMap = new Map<String, String>();
+    
+//     for (Account acc : newAccMap.values()) {
+//         accMap.put(acc.Name, acc.Id);
+//     }
+    
+//     List<Account> existingAccounts = [SELECT Id, Name FROM Account WHERE Name IN :accMap.keyset() AND Id Not In: newAccMap.keyset()];
+//     Map<String, String> existingAccountsMap = new Map<String, String>();
+//     for (Account existingAccount : existingAccounts) {
+//         String name = existingAccount.Name;
+//         String newAccId = accMap.get(name);
+//         existingAccountsMap.put(newAccId, existingAccount.Id);
+//     }
+
+//     List<Contact> contactsToUpdate = [SELECT Id, AccountId,Account.Name FROM Contact WHERE AccountId IN :existingAccountsMap.values()];
+    
+//     for (Contact con : contactsToUpdate) {
+//         String name = con.Account.Name;
+//         String newAccId = accMap.get(name);
+//         con.AccountId = newAccId;
+//     }
+//     update contactsToUpdate;
+// }
+public static void changeRelatedAccount(List<Account> accList){
+    // set<String> accountNames = new set<String>();
+    Map<String,Id> accountNameIdMap = new Map<String,Id>();
+    for(Account accountRecord: accList){
+        // accountNames.add(accountRecord.Name);
+        accountNameIdMap.put(accountRecord.Name,accountRecord.Id);
+    }
+    List<Contact> contactList = [SELECT Id,AccountId,Account.Name FROM Contact WHERE Account.Name IN: accountNameIdMap.keySet()];
+    
+    for(Contact contactRecord: contactList){
+        Id newAccountId = accountNameIdMap.get(contactRecord.Account.Name);
+        contactRecord.AccountId = newAccountId;
+    }
+    update contactList;
+}
 }

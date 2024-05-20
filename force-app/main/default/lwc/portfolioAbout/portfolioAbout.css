@@ -1,0 +1,14 @@
+.container {
+    background:none;
+    max-width: 800px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add padding around the container */
+}
+
+.container h2 {
+    margin-top: 0; /* Remove top margin for h2 elements */
+}
+
+.container p {
+    margin-bottom: 20px; /* Add bottom margin for paragraphs */
+}

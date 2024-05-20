@@ -78,7 +78,7 @@ public static void updatePhone(List<Account> accList){
         //to get single value
         // accMap.put(acc.Id,acc.Phone);
 
-        //to get multiple values using get set apex class Account Data transfer Object =AccountDTO
+        //to get multiple values using get set apex class Account Data transfer String =AccountDTO
         AccountDTO accD=new AccountDTO();
         accD.phone=acc.Phone
         accD.email=acc.Email
@@ -233,3 +233,92 @@ global class demo implements Database.Batchable<sobject>{
         Database.executeBatch(obj);
     }
 }
+
+
+
+global class practice implements Database.Batchable<sobject>{
+    global Database.QueryLocator start(Database.BatchableContext BC){
+        return Database.getQueryLocator([SELECT Id,Name,Description from Account]);
+    }
+    global void execute(Database.BatchableContext BC,List<Account> accList){
+        List<Account> fullData = new List<Account>();
+        for(Account acc: accList){
+            acc.Description='new description';
+            fullData.add(acc);
+        }
+        update fullData;
+    }
+    global void finish(Database.BatchableContext BC){
+        system.debug('finishded');
+    }
+    global void execute(SchedulableContext SC){
+        practice pc=new practice();
+        Database.executeBatch(pc);
+    }
+}
+
+
+
+public static class accountContact(List<Account> accList){
+
+    Map<String, String> mapName = new Map<String, String>();
+    for(Account acc:accList){
+        mapName.put(acc.Id, acc.phone);
+    }
+
+    List<Contact> conList = [SELECT id,name from contact where AccountId IN :mapName.keyset()];
+    for(Contact con: conList){
+        con.phone=mapName.get(con.AccountId);
+    }
+    update conList;
+}
+
+
+public static void contactAccount(List<Account> accList){
+
+    Map<String, String> accMap = new Map<String, String>();
+    for(Account acc:accList){
+        accMap.put(acc.Id, acc.Phone);
+    }
+
+    List<Contact> conList = [SELECT id,name from Contact where AccountId IN :accMap.keyset()];
+    for(Contact con:conList){
+        con.Phone=accMap.get(con.AccountId);
+    }
+    update conList;
+}
+
+
+
+
+public static void stopDel(List<Account> accList){
+
+    Set<ID> setName = new Set<ID>();
+    for(Profile prof:[SELECT id from profile WHERE name = 'system administrator']){
+        setName.add(prof.Id);
+    }
+    if(!setName.contains(UserInfo.getProfileId())){
+        for(Account acc:accList){
+            acc.addError('You dont have enough permissions to delete this');
+        }
+    }
+}
+
+
+
+public static void getData(List<Account> accList){
+
+    Map<String, String> accMap = new Map<String, String>();
+    for(Account acc:accList){
+        accMap.put(acc.Id, acc.Phone);
+    }
+
+    List<Contact> conList = [SELECT id,Name FROM Contact where AccountId IN :accMap.keyset()];
+
+    for(Contact con:conList){
+        con.Phone=accMap.get(con.AccountId);
+    }
+}
+
+
+global class className implements Database.Batchable<sobject>{}

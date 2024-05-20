@@ -1,7 +1,25 @@
 <template>
-    <!-- <lightning-card title="User Registration Form">
-        <lightning-input label="Enter your Username" name="userName" type="text" value={userName} onchange={handleUser}></lightning-input>
-        <lightning-input label="Enter your Email" name="userEmail" type="email" value={userEmail} onchange={handleEmail}></lightning-input>
-        <lightning-button label="Submit" onclick={handleSubmit}></lightning-button>
-    </lightning-card> -->
+        <nav class="nav-bar-container">
+
+            <div class="nav-bar" id="nav-bar">
+                <button class="nav-link" name="Home" onclick={navigateToPages}>Home</button>
+                <button class="nav-link" name="about__c" onclick={navigateToPages}>About</button>
+            <div class="dropdown">
+                <button class="nav-link portfolio-btn">Portfolio</button>
+                <div class="dropdown-container">
+                    <button class="nav-link" name="flow_page__c" onclick={navigateToPages}>Flows</button>
+                    <button class="nav-link" name="Projects" onclick={navigateToPages}>Projects</button>
+                </div>
+            </div>
+            <button class="nav-link" name="Contact_Me" onclick={navigateToPages}>Contact Me</button>
+            </div>
+
+            <button class="slds-button slds-button_icon slds-button_icon-brand menu-button" 
+                    title="Search" onclick={menuClickHandler}>
+                <svg class="slds-button__icon" aria-hidden="true">
+                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#apps"></use>
+                </svg>
+                <span class="slds-assistive-text">Search</span>
+            </button>
+        </nav>
 </template>

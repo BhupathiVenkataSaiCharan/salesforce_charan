@@ -3,15 +3,17 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
         when BEFORE_INSERT{
             system.debug('checkpoint trigger.isInsert.isBefore');
             // AccountTriggerHandler.updateIndustryRating(trigger.new);
-            AccountTriggerHandler.copyBillingToShipping(trigger.new);
-            
+            // AccountTriggerHandler.copyBillingToShipping(trigger.new);
+            // AccountTriggerHandler.accRating(trigger.new);
         }
         when AFTER_INSERT{
             system.debug('checkpoint trigger.isInsert.isAfter');
                 system.debug('checkpoint trigger.isInsert.isAfter.Banking');
                 // AccountTriggerHandler.createContactWhenAccountisCreated(trigger.new);
             // AccountTriggerHandler.associateAccountwithContact(trigger.new);
-            AccountTriggerHandler.createContactOpportunity(trigger.new);
+            // AccountTriggerHandler.createContactOpportunity(trigger.new);
+            // AccountTriggerHandler.associateContactsWithExistingAccount(trigger.newMap);
+            AccountTriggerHandler.changeRelatedAccount(trigger.new);
 		}
         when BEFORE_UPDATE{
             system.debug('checkpoint for before update');
