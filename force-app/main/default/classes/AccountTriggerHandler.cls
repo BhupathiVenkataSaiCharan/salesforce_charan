@@ -284,17 +284,20 @@ public class AccountTriggerHandler {
 // }
 public static void changeRelatedAccount(List<Account> accList){
     // set<String> accountNames = new set<String>();
-    Map<String,Id> accountNameIdMap = new Map<String,Id>();
-    for(Account accountRecord: accList){
-        // accountNames.add(accountRecord.Name);
-        accountNameIdMap.put(accountRecord.Name,accountRecord.Id);
+        Map<String,Id> accountNameIdMap = new Map<String,Id>();
+        for(Account accountRecord: accList){
+            // accountNames.add(accountRecord.Name);
+            accountNameIdMap.put(accountRecord.Name,accountRecord.Id);
+        }
+        List<Contact> contactList = [SELECT Id,AccountId,Account.Name FROM Contact WHERE Account.Name IN: accountNameIdMap.keySet()];
+        
+        for(Contact contactRecord: contactList){
+            Id newAccountId = accountNameIdMap.get(contactRecord.Account.Name);
+            contactRecord.AccountId = newAccountId;
+        }
+        update contactList;
     }
-    List<Contact> contactList = [SELECT Id,AccountId,Account.Name FROM Contact WHERE Account.Name IN: accountNameIdMap.keySet()];
-    
-    for(Contact contactRecord: contactList){
-        Id newAccountId = accountNameIdMap.get(contactRecord.Account.Name);
-        contactRecord.AccountId = newAccountId;
+    public static void stopUpdate(){
+        
     }
-    update contactList;
-}
 }

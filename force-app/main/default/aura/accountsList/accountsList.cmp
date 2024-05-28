@@ -1,0 +1,33 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="accountsListforAura">
+    <aura:attribute name="account" type="List"/>
+    <aura:attribute name="mycolumns" type="List"/>
+
+    <!-- pagination -->
+    <aura:attribute name="currentPage" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+
+    <aura:attribute name="searchKeyword" type="String" default=""/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds slds-card slds-p-around_large">
+        <h2>List of Accounts</h2>
+
+        <!-- Search bar -->
+        <lightning:input type="search" label="Search the records" 
+                            value="{!v.searchKeyword}" onchange="{!c.searchAccounts}"></lightning:input>
+
+        <lightning:datatable data="{!v.account}" columns="{!v.mycolumns}"
+                             keyField="Id" hideCheckboxColumn="true">
+        </lightning:datatable>
+        <div class="slds-m-top_medium">
+            <lightning:buttonGroup>
+                <lightning:button label="First" onclick="{!c.firstPage}" disabled="{!v.currentPage == 1}"/>
+                <lightning:button label="Previous" onclick="{!c.previousPage}" disabled="{!v.currentPage == 1}"/>
+                <lightning:button label="Next" onclick="{!c.nextPage}" disabled="{!v.currentPage == v.totalPages}"/>
+                <lightning:button label="Last" onclick="{!c.lastPage}" disabled="{!v.currentPage == v.totalPages}"/>
+            </lightning:buttonGroup>
+        </div>
+    </div>
+</aura:component>

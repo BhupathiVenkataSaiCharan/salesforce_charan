@@ -9,14 +9,14 @@ export default class LoginLwc extends LightningElement {
 
        this.inputValues={...this.inputValues, [name]:value};
     }
-    handleClick(event){
+    // handleClick(event){
 
-        const {userName,password} = this.inputValues;
+    //     const {userName,password} = this.inputValues;
 
-       console.log(`User name is ${userName} Password is ${password}`);
+    //    console.log(`User name is ${userName} Password is ${password}`);
 
-       this.clearInputs();
-    }
+    //    this.clearInputs();
+    // }
 
     
     clearInputs() {

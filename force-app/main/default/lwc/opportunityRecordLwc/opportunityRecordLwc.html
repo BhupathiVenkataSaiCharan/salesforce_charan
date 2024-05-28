@@ -1,0 +1,26 @@
+<template>
+    <div class="slds-m-top_medium slds-m-bottom_x-large">
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" name="name" label="Name" placeholder="type here..." onchange={handleValueChange}></lightning-input>
+            <!-- <lightning-input type="text" label="Stage" placeholder="type here..." onchange={handleValueChange}></lightning-input>
+            <lightning-input type="text" label="Close Date" placeholder="DD/MM/YYYY" onchange={handleValueChange}></lightning-input> -->
+            <lightning-combobox
+                label="Stage Name"
+                name="stageName"
+                placeholder="Select Stage"
+                options={stageOptions}
+                onchange={handleValueChange}></lightning-combobox>
+            <lightning-input 
+                type="date" 
+                label="Close Date"
+                name="closeDate" 
+                placeholder="Select Date"
+                onchange={handleValueChange}></lightning-input>
+            <button class="slds-button slds-button_brand" onclick={submit}>Save</button>
+        </div>
+        <!-- Displaying the API result -->
+    <template if:true={apiResult}>
+        <p>API Result: {apiResult}</p>
+    </template>
+    </div>
+</template>
