@@ -14,7 +14,7 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.createContactOpportunity(trigger.new);
             // AccountTriggerHandler.associateContactsWithExistingAccount(trigger.newMap);
             AccountTriggerHandler.changeRelatedAccount(trigger.new);
-		}
+        }
         when BEFORE_UPDATE{
             system.debug('checkpoint for before update');
             // AccountTriggerHandler.copyBillingToShipping(trigger.new);
@@ -27,8 +27,8 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             AccountTriggerHandler.updateDescription(trigger.new,trigger.old);
         }
         when BEFORE_DELETE{
-        	system.debug('checkpoint trigger.isDelete');
-        	// AccountTriggerHandler.onAccountDelete(trigger.old);
+            system.debug('checkpoint trigger.isDelete');
+            // AccountTriggerHandler.onAccountDelete(trigger.old);
             // AccountTriggerHandler.stopDelete(trigger.old);
             // AccountTriggerHandler.allowDeletion(trigger.old);
             AccountTriggerHandler.cannotDelete(trigger.old);

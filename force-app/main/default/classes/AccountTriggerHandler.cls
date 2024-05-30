@@ -297,7 +297,4 @@ public static void changeRelatedAccount(List<Account> accList){
         }
         update contactList;
     }
-    public static void stopUpdate(){
-        
-    }
 }

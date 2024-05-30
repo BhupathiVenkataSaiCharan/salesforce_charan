@@ -1,33 +1,96 @@
 ({
-    doInit : function(component, event, helper) {
+    doInit: function(component, event, helper) {
         helper.getAccList(component);
         helper.getAccField(component);
     },
-    firstPage : function(component, event, helper) {
+
+    firstPage: function(component, event, helper) {
         component.set("v.currentPage", 1);
         helper.getAccList(component);
     },
 
-    previousPage : function(component, event, helper) {
+    previousPage: function(component, event, helper) {
         var currentPage = component.get("v.currentPage");
-        console.log('current page' +currentPage);
+        console.log('current page' + currentPage);
         component.set("v.currentPage", Math.max(1, currentPage - 1));
         helper.getAccList(component);
     },
 
-    nextPage : function(component, event, helper) {
+    nextPage: function(component, event, helper) {
         var currentPage = component.get("v.currentPage");
-        console.log('current page' +currentPage);
+        console.log('current page' + currentPage);
         component.set("v.currentPage", Math.min(currentPage + 1, component.get("v.totalPages")));
         helper.getAccList(component);
     },
 
-    lastPage : function(component, event, helper) {
+    lastPage: function(component, event, helper) {
         component.set("v.currentPage", component.get("v.totalPages"));
         helper.getAccList(component);
     },
-    searchAccounts : function(component, event, helper) {
+
+    searchAccounts: function(component, event, helper) {
         component.set("v.currentPage", 1); // Reset pagination to the first page
         helper.getAccList(component);
+    },
+
+    handleRowAction: function(component, event, helper) {
+        // Log the event object
+        console.log('event', event);
+
+        // Retrieve the action details
+        const action = event.getParam('action');
+        const row = event.getParam('row');
+
+        // Log the action and row details
+        console.log('action', JSON.stringify(action));
+        console.log('row.Id: ', row.Id);
+
+        // Determine the action name and handle accordingly
+        const actionName = action.name;
+        switch (actionName) {
+            case "Edit":
+                // Handle the Edit action (if any logic is needed)
+                break;
+            case "Delete":
+                // Handle the Delete action
+                console.log('inside delete');
+                component.set("v.showDelete", true);
+                component.set("v.selectedRecordId", row.Id);
+                console.log('delete clicked', component.get("v.showDelete"));
+                break;
+        }
+    },
+
+    confirmDelete: function(component, event, helper) {
+        component.set("v.showDelete", false);
+        console.log("DELETED JS");
+        helper.deleteSelectedRecord(component);
+    },
+
+    closeModal: function(component, event, helper) {
+        component.set("v.showDelete", false);
+    },
+
+    handleRecordUpdated: function(component, event, helper) {
+        var eventParams = event.getParams();
+        console.log('event',event);
+        console.log('eventParams', eventParams);
+
+        if (eventParams.changeType === "CHANGED") {
+            // Record is changed
+            var updatedRecord = component.get('v.record');
+            console.log('Updated Record: ', updatedRecord);
+        } else if (eventParams.changeType === "LOADED") {
+            // Record is loaded in the cache
+        } else if (eventParams.changeType === "REMOVED") {
+            // Record is deleted, show a toast UI message
+            var resultsToast = $A.get("e.force:showToast");
+            resultsToast.setParams({
+                "title": "Deleted",
+                "message": "The record was deleted."
+            });
+            resultsToast.fire();
+        } else if(eventParams.changeType === "ERROR") {
+        }
     }
 })

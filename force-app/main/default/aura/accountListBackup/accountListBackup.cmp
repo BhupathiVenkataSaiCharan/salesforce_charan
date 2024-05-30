@@ -1,0 +1,94 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="accountsListforAura">
+    <aura:attribute name="account" type="List"/>
+    <aura:attribute name="mycolumns" type="List"/>
+
+    <!-- pagination -->
+    <aura:attribute name="currentPage" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="searchKeyword" type="String" default=""/>
+
+    <!-- Dialogs -->
+    <aura:attribute name="showEdit" type="Boolean" default="false"></aura:attribute>
+    <aura:attribute name="showDelete" type="Boolean" default="false"></aura:attribute>
+
+    <aura:attribute name="selectedRecordId" type="String" default=""/>
+    <!-- <aura:attribute name="selectedRecord" type="Object"/> -->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds slds-card slds-p-around_large">
+        <h2>List of Accounts Backup</h2>
+
+        <!-- Search bar -->
+        <lightning:input type="search" label="Search the records" 
+                            value="{!v.searchKeyword}" onchange="{!c.searchAccounts}"></lightning:input>
+
+        <lightning:datatable data="{!v.account}" columns="{!v.mycolumns}" onrowaction="{!c.handleRowAction}"
+                             keyField="Id" hideCheckboxColumn="true">
+        </lightning:datatable>
+
+        <div class="slds-m-top_medium">
+            <lightning:buttonGroup>
+                <lightning:button label="First" onclick="{!c.firstPage}" disabled="{!v.currentPage == 1}"/>
+                <lightning:button label="Previous" onclick="{!c.previousPage}" disabled="{!v.currentPage == 1}"/>
+                <lightning:button label="Next" onclick="{!c.nextPage}" disabled="{!v.currentPage == v.totalPages}"/>
+                <lightning:button label="Last" onclick="{!c.lastPage}" disabled="{!v.currentPage == v.totalPages}"/>
+            </lightning:buttonGroup>
+        </div>
+    </div>
+    <!-- For Edit -->
+    <aura:if isTrue="{!v.showEdit}">
+        <p>selectedRecordId {!v.selectedRecordId}</p>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeEditModal}">
+                        <lightning:icon iconName="utility:close" size="small"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Edit Record</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning:recordEditForm recordId="{!v.selectedRecordId}" objectApiName="Account" onsuccess="{!c.updateRecord}">
+                        <lightning:messages />
+                        <lightning:outputField fieldName="Id" />
+                        <lightning:inputField fieldName="Name" />
+                        <!-- <lightning:inputField fieldName="LastName" />
+                        <lightning:inputField fieldName="Email" /> -->
+                        <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update"/>
+                    </lightning:recordEditForm>
+                </div>
+                <!-- <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closeModal}"/>
+                    <lightning:button variant="destructive" label="Delete" onclick="{!c.confirmDelete}"/>
+                </footer> -->
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <!-- For Delete -->
+    <aura:if isTrue="{!v.showDelete}">
+        <p>selectedRecordId {!v.selectedRecordId}</p>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeDeleteModal}">
+                        <lightning:icon iconName="utility:close" size="small"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Delete Record</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Are you sure you want to delete this record?</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closeDeleteModal}"/>
+                    <lightning:button variant="destructive" label="Delete" onclick="{!c.confirmDelete}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+
+</aura:component>

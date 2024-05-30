@@ -185,9 +185,21 @@
     <tabs>flow__c</tabs>
     <tabs>temp__c</tabs>
     <tabs>for_Email__c</tabs>
+    <tabs>Position__c</tabs>
+    <tabs>User_Information__c</tabs>
+    <tabs>Mobile_Country_Code__c</tabs>
     <workspaceConfig>
         <mappings>
+            <tab>Mobile_Country_Code__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Position__c</tab>
+        </mappings>
+        <mappings>
             <tab>REST__c</tab>
+        </mappings>
+        <mappings>
+            <tab>User_Information__c</tab>
         </mappings>
         <mappings>
             <tab>flow__c</tab>

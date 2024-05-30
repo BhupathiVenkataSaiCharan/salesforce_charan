@@ -11,5 +11,8 @@
     <tabs>flow__c</tabs>
     <tabs>temp__c</tabs>
     <tabs>for_Email__c</tabs>
+    <tabs>Position__c</tabs>
+    <tabs>User_Information__c</tabs>
+    <tabs>Mobile_Country_Code__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

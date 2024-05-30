@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>venkatasaicharanbhupathi@gmail.com</contactEmail>
+    <contactPhone>9515923462</contactPhone>
+    <label>Test REST Connected App</label>
+    <oauthConfig>
+        <callbackUrl>https://www.salesforce.com/in/?ir=1</callbackUrl>
+        <consumerKey>3MVG9fe4g9fhX0E4lxNVct5syfkN6YM6K1F5Mh3t_0rWx4yEi1tVsc_53L9_sIrNF1RtodLGMi.yQ0Oxu2MD.</consumerKey>
+        <isAdminApproved>false</isAdminApproved>
+        <isClientCredentialEnabled>true</isClientCredentialEnabled>
+        <isCodeCredentialEnabled>false</isCodeCredentialEnabled>
+        <isCodeCredentialPostOnly>false</isCodeCredentialPostOnly>
+        <isConsumerSecretOptional>false</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isNamedUserJwtEnabled>false</isNamedUserJwtEnabled>
+        <isPkceRequired>true</isPkceRequired>
+        <isSecretRequiredForRefreshToken>true</isSecretRequiredForRefreshToken>
+        <oauthClientCredentialUser>sub@gmail.in</oauthClientCredentialUser>
+        <scopes>Full</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>ENFORCE</ipRelaxation>
+        <refreshTokenPolicy>zero</refreshTokenPolicy>
+    </oauthPolicy>
+</ConnectedApp>

@@ -29,6 +29,26 @@ public with sharing class accountsListforAura {
         }
     }
 
+    @AuraEnabled
+    public static string deleteRecord(String recordId){
+        System.debug('deleting record... '+recordId);
+        String result = '';
+        try {
+            Database.DeleteResult sr =  Database.delete(recordId);
+            if (sr.isSuccess()) {
+                result = sr.getId();
+            }else {
+                result = sr.getErrors().toString();
+            }
+        }catch(System.DmlException de){
+            result = de.getMessage();
+        }
+         catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+        return result;
+    }
+
     public class PaginationResult {
         @AuraEnabled public List<Account> accounts { get; set; }
         @AuraEnabled public Integer totalCount { get; set; }

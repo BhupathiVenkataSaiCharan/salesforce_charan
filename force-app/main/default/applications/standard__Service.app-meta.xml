@@ -17,4 +17,7 @@
     <tabs>temp__c</tabs>
     <tabs>for_Email__c</tabs>
     <tabs>Knowledge__kav</tabs>
+    <tabs>Position__c</tabs>
+    <tabs>User_Information__c</tabs>
+    <tabs>Mobile_Country_Code__c</tabs>
 </CustomApplication>
