@@ -26,6 +26,7 @@
 
                 component.set('v.account', accounts);
                 component.set('v.totalPages', Math.ceil(result.totalCount / pageSize));
+                
                 console.log('total pages:', Math.ceil(result.totalCount / pageSize));
             } else {
                 console.error("Failed with state: " + state);

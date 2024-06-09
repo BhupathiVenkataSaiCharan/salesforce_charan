@@ -1,0 +1,16 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="receivedMessage" type="String"/>
+    <aura:attribute name="label" type="String"/>
+    <aura:attribute name="eventCount" type="Integer" default="0"/>
+
+    <aura:handler name="cmpEvent" event="c:ComponentEvent" action="{!c.handleComponentEvent}"/>
+
+    <h1>Cmoponent Event Handler</h1>
+
+    <p>{!v.receivedMessage}</p>
+    <p>{!v.label}</p>
+    <p>{!v.eventCount}</p>
+
+    <hr/>
+    <c:Child/>
+</aura:component>

@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+
+    <aura:attribute name="con" type="Object"/>
+    <aura:attribute name="newcon" type="Object"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- <force:recordData aura:id="recordData" targetFields="{!v.con}" fields="LastName,FirstName,Phone"/> -->
+    <force:recordData aura:id="recordData" targetFields="{!v.con}" targetRecord="{!v.newcon}" fields="LastName,FirstName,Phone"/>
+
+    <lightning:card title="Programming Based LDS in Aura">
+
+    <lightning:input label="Last Name" value="{!v.con.LastName}"/>
+    <lightning:input label="First Name" value="{!v.con.FirstName}"/>
+    <lightning:input label="Phone" value="{!v.con.Phone}"/>
+    <lightning:input label="Email" value="{!v.con.Email}"/>
+
+    <!-- <aura:set attribute="actions"> -->
+        <lightning:button label="Submit" variant="success" onclick="{!c.handleSubmit}"/>
+    <!-- </aura:set> -->
+
+    </lightning:card>
+
+</aura:component>	

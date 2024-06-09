@@ -73,8 +73,7 @@
         console.log('Record Updated');
         component.set("v.showEdit", false);
         helper.getAccList(component);
-    },
-    
+    }, 
     closeEditModal: function(component, event, helper) {
         component.set("v.showEdit", false);
     },

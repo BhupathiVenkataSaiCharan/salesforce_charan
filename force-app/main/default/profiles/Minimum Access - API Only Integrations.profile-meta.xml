@@ -11,6 +11,11 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>LWC</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>standard__AllTabSet</application>
         <default>true</default>
         <visible>false</visible>
@@ -315,6 +320,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>dynamicIntro</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>getObjectRecords</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -764,6 +773,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Knowledge__kav</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Lightning_Components</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="List of Accounts">
+        <lightning-datatable 
+            key-field="Id"
+            data={data} 
+            columns={columns} 
+            hide-checkbox-column="true">
+        </lightning-datatable>
+
+        <div class="slds-m-top_medium">
+            <lightning-button 
+                label="Previous" 
+                onclick={handlePrev} 
+                disabled={isPrevDisabled}>
+            </lightning-button>
+            <lightning-button 
+                label="Next" 
+                onclick={handleNext} 
+                disabled={isNextDisabled}>
+            </lightning-button>
+            <p>Page {currentPage} of {totalPages}</p>
+        </div>
+    </lightning-card>
+</template>

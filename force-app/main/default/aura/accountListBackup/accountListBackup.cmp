@@ -1,4 +1,5 @@
 <aura:component implements="flexipage:availableForAllPageTypes" controller="accountsListforAura">
+    
     <aura:attribute name="account" type="List"/>
     <aura:attribute name="mycolumns" type="List"/>
 
@@ -12,8 +13,9 @@
     <aura:attribute name="showEdit" type="Boolean" default="false"></aura:attribute>
     <aura:attribute name="showDelete" type="Boolean" default="false"></aura:attribute>
 
+    <!-- To store record id from row -->
     <aura:attribute name="selectedRecordId" type="String" default=""/>
-    <!-- <aura:attribute name="selectedRecord" type="Object"/> -->
+
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
@@ -25,7 +27,7 @@
                             value="{!v.searchKeyword}" onchange="{!c.searchAccounts}"></lightning:input>
 
         <lightning:datatable data="{!v.account}" columns="{!v.mycolumns}" onrowaction="{!c.handleRowAction}"
-                             keyField="Id" hideCheckboxColumn="true">
+                                keyField="Id" hideCheckboxColumn="true">
         </lightning:datatable>
 
         <div class="slds-m-top_medium">
@@ -54,19 +56,14 @@
                         <lightning:messages />
                         <lightning:outputField fieldName="Id" />
                         <lightning:inputField fieldName="Name" />
-                        <!-- <lightning:inputField fieldName="LastName" />
-                        <lightning:inputField fieldName="Email" /> -->
                         <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update"/>
                     </lightning:recordEditForm>
                 </div>
-                <!-- <footer class="slds-modal__footer">
-                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.closeModal}"/>
-                    <lightning:button variant="destructive" label="Delete" onclick="{!c.confirmDelete}"/>
-                </footer> -->
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </aura:if>
+    
     <!-- For Delete -->
     <aura:if isTrue="{!v.showDelete}">
         <p>selectedRecordId {!v.selectedRecordId}</p>

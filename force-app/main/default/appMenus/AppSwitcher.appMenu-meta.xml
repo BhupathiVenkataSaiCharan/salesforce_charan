@@ -148,4 +148,8 @@
         <name>Aura_Components</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>LWC</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
 </AppMenu>

@@ -1,0 +1,48 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+
+    <!-- attribute to get custom fields -->
+    <aura:attribute name="customFields" type="String[]" default="['Name', 'Rating', 'Industry']"/>
+
+    <lightning:card title="Form Based LDS in Aura">
+        <p>lightning Data Service Record View Form</p><br/>
+        <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Account">
+            <!-- <lightning:recordViewForm recordId="001J1000002HYcBIAW" objectApiName="Account"> -->
+            <lightning:outputField fieldName="Name"/>
+            <lightning:outputField fieldName="Rating"/>
+            <lightning:outputField fieldName="Industry"/>
+        </lightning:recordViewForm>
+        <lightning:button label="Delete" variant="destructive" onclick="{!c.handleDelete}"/>
+        <hr/>
+        <p>lightning Data Service Record Edit Form</p><br/>
+        <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="Account" aura:id="recordEditForm">
+        <!-- <lightning:recordEditForm recordId="001J1000002HYcBIAW" objectApiName="Account" aura:id="recordEditForm"> -->
+            <lightning:inputField fieldName="Name"/>
+            <lightning:inputField fieldName="Rating"/>
+            <lightning:inputField fieldName="Industry"/>
+            <lightning:button type="submit" label="Save" onclick="{!c.handleSubmit}"></lightning:button>
+        </lightning:recordEditForm>
+        <p>lightning Data Service Record Form</p><br/>
+        <!-- if you want to get all fields using layoutType= compact or full -->
+        <!-- <lightning:recordForm recordId="001J1000002HYcBIAW" objectApiName="Account" 
+                                layoutType="Full" columns="2" mode="Edit"
+                                >
+        </lightning:recordForm> -->
+        
+        <!-- to get custom columns by defining attribute-->
+        <!-- <lightning:recordForm recordId="001J1000002HYcBIAW" objectApiName="Account"
+                                fields="{!v.customFields}" mode="view"
+                                > 
+             </lightning:recordForm> -->
+
+        <!-- to get recordId dynamically from page...
+                add implements="flexipage:availableForAllRecordTypes,force:hasRecordId" 
+                access="global" if needed
+        -->
+        <lightning:recordForm recordId="{!v.recordId}" objectApiName="Account" 
+                                fields="{!v.customFields}" columns="2"
+                                mode="View"
+                                >
+        </lightning:recordForm>
+    
+    </lightning:card>
+</aura:component>	

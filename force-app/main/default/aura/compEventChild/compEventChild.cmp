@@ -1,0 +1,13 @@
+<aura:component>
+    <aura:attribute name="cacc" type="Account" default="{'sObjectType':'Account'}"/>
+
+    <aura:registerEvent name="sona" type="c:compEvent"/>
+
+    <lightning:card title="Account Data">
+        <lightning:input label="Account Name" value="{!v.cacc.Name}"/>
+        <lightning:input label="Account Phone" value="{!v.cacc.Phone}"/>
+        <lightning:input label="Account Industry" value="{!v.cacc.Industry}"/>
+
+        <lightning:button label="Submit" onclick="{!c.callme}"/>
+    </lightning:card>
+</aura:component>	
