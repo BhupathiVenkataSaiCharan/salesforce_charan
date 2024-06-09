@@ -1,13 +1,18 @@
-<aura:component>
+<aura:component controller="compEventClass">
+
+    <!-- Attribute to hold the account data -->
     <aura:attribute name="cacc" type="Account" default="{'sObjectType':'Account'}"/>
 
+    <!-- Register the custom event -->
     <aura:registerEvent name="sona" type="c:compEvent"/>
 
+    <!-- Lightning card to input account data -->
     <lightning:card title="Account Data">
         <lightning:input label="Account Name" value="{!v.cacc.Name}"/>
         <lightning:input label="Account Phone" value="{!v.cacc.Phone}"/>
         <lightning:input label="Account Industry" value="{!v.cacc.Industry}"/>
-
+        
         <lightning:button label="Submit" onclick="{!c.callme}"/>
     </lightning:card>
-</aura:component>	
+
+</aura:component>

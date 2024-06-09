@@ -1,16 +1,23 @@
-<aura:component implements="flexipage:availableForAllPageTypes">
+<aura:component implements="flexipage:availableForAllPageTypes" controller="compEventClass">
 
+    <!-- Attribute to hold the list of accounts -->
     <aura:attribute name="accounts" type="List" default="[]"/>
+
+    <!-- Attribute to hold the columns for the datatable -->
     <aura:attribute name="col" type="List"/>
 
+    <!-- Handler for component initialization -->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
+    <!-- Handler for custom event -->
     <aura:handler name="sona" event="c:compEvent" action="{!c.showme}"/>
 
+    <!-- Include the child component -->
     <c:compEventChild/>
-    
-    <lightning:card title="Account Table">
+
+    <!-- Lightning card to display the datatable -->
+    <lightning:card title="Display Child Data in Parent">
         <lightning:datatable keyField="Id" data="{!v.accounts}" columns="{!v.col}"/>
     </lightning:card>
-    
-</aura:component>	
+
+</aura:component>
