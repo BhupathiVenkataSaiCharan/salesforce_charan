@@ -1,0 +1,13 @@
+<aura:component controller="searchAcc_displayConOpp">
+    <aura:attribute name="accNm" type="String"/>
+    <aura:attribute name="accIndust" type="String"/>
+
+    <aura:registerEvent name="not-important" type="c:SearchAccDisplayConOpp"/>
+
+    <lightning:card title="Account Search">
+        <lightning:input label="Account Name" value="{!v.accNm}" type="Search"/>
+        <lightning:input label="Account Industry" value="{!v.accIndust}" type="Search"/>
+
+        <lightning:button label="Search" onclick="{!c.clickme}"/>
+    </lightning:card>
+</aura:component>	

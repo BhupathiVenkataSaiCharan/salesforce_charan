@@ -1,0 +1,11 @@
+<aura:component controller="searchAcc_displayConOpp">
+
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="coll" type="List"/>
+
+    <aura:handler event="c:SearchAccDisplayConOpp" action="{!c.showme}"/>
+
+    <lightning:card title="Contact List">
+        <lightning:datatable keyField="Id" data="{!v.data}" columns="{!v.coll}"/>
+    </lightning:card>
+</aura:component>	
