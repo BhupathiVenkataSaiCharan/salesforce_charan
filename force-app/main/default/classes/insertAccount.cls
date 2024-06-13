@@ -6,10 +6,10 @@ public class insertAccount {
         
         for(integer i=1;i<100;i++){
           	Account acc=new Account();
-        	acc.Name='new accounts'+i;  
+        	acc.Name='newaccounts'+i;  
             accList.add(acc);
         }
         insert accList;
-        
+       
     }
 }

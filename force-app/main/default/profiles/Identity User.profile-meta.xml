@@ -135,7 +135,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountDTOTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AddProductController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -311,6 +319,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>accountsListforAuraTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>allloops</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -339,7 +351,15 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>getObjectRecordsTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>insertAccount</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>insertionAccountTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

@@ -4,7 +4,7 @@ public with sharing class accountsListforAura {
     public static PaginationResult accListData(Integer pageSize, Integer pageNumber,String searchKeyword) {
         PaginationResult result = new PaginationResult();
         System.debug('searchKeyword' +searchKeyword);
-        try {
+        
             Integer offset = Math.max(0, (pageNumber - 1) * pageSize);
             System.debug('offset value: ' + offset);
 
@@ -24,9 +24,6 @@ public with sharing class accountsListforAura {
             result.accounts = accList;
             result.totalCount = totalCount;
             return result;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
     }
 
     @AuraEnabled
@@ -38,14 +35,13 @@ public with sharing class accountsListforAura {
             if (sr.isSuccess()) {
                 result = sr.getId();
             }else {
-                result = sr.getErrors().toString();
+                system.debug('Error');
+                //result = sr.getErrors().toString();
             }
-        }catch(System.DmlException de){
+        }catch(exception de){
             result = de.getMessage();
         }
-         catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
+       
         return result;
     }
 
