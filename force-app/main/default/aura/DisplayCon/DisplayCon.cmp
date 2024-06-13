@@ -8,4 +8,4 @@
     <lightning:card title="Contact List">
         <lightning:datatable keyField="Id" data="{!v.data}" columns="{!v.coll}"/>
     </lightning:card>
-</aura:component>	
+</aura:component>

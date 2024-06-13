@@ -1,67 +1,69 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import getAccounts from '@salesforce/apex/getObjectRecords.getAccounts';
-import getTotalAccountCount from '@salesforce/apex/getObjectRecords.getTotalAccountCount';
+import getAccountsCount from '@salesforce/apex/getObjectRecords.getAccountsCount';
 
 const columns = [
-    { label: 'Index', fieldName: 'index' },
+    { label: 'Index', fieldName: 'serialNumber', type: 'number' }, // New column for serial number
     { label: 'Id', fieldName: 'Id' },
-    { label: 'Name', fieldName: 'Name' }
+    { label: 'Name', fieldName: 'Name' },
+    { label: 'Industry', fieldName: 'Industry' }
 ];
 
 export default class DisplayObjectRecords extends LightningElement {
-    data;
+    @track data;
     columns = columns;
-    error;
+    searchName = '';
+    @track currentPage = 1;
+    @track totalRecords = 0;
     pageSize = 10;
-    currentPage = 1;
-    totalRecords;
-    totalPages;
-    isPrevDisabled = true;
-    isNextDisabled = false;
 
-    @wire(getTotalAccountCount)
-    wiredTotal({ error, data }) {
-        if (data) {
-            this.totalRecords = data;
-            this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
-            this.updateButtonStatus();
-        } else{
-            this.error = error;
-        }
+    handleName(event) {
+        this.searchName = event.target.value;
+        this.currentPage = 1;
+        this.loadAccounts();
     }
 
-    @wire(getAccounts,{limitSize: `$pageSize`, offset: `{($currentPage - 1) * $pageSize}`})
-    wiredAccounts({error,data}){
-        if (data) {
-            this.data = result.map((account, index) => {
-                return { 
-                    ...account, 
-                    index: (this.currentPage - 1) * this.pageSize + index + 1 
-                };
+    loadAccounts() {
+        getAccountsCount({ accName: this.searchName })
+            .then(result => {
+                this.totalRecords = result;
+                return getAccounts({ accName: this.searchName, pageNumber: this.currentPage, pageSize: this.pageSize });
+            })
+            .then(result => {
+                // Add serial number to each record
+                this.data = result.map((item, index) => ({
+                    ...item,
+                    serialNumber: (this.currentPage - 1) * this.pageSize + index + 1
+                }));
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
-            this.error = undefined;
-            this.updateButtonStatus();
-        } else{
-            this.error = error;
-            this.data = undefined;
+    }
+
+    handlePrevious() {
+        if (this.currentPage > 1) {
+            this.currentPage -= 1;
+            this.loadAccounts();
         }
     }
 
     handleNext() {
-        if (this.currentPage < this.totalPages) {
+        if (this.currentPage < Math.ceil(this.totalRecords / this.pageSize)) {
             this.currentPage += 1;
-
+            this.loadAccounts();
         }
     }
 
-    handlePrev() {
-        if (this.currentPage > 1) {
-            this.currentPage -= 1;
-        }
+    connectedCallback() {
+        this.loadAccounts();
     }
 
-    updateButtonStatus() {
-        this.isPrevDisabled = (this.currentPage <= 1);
-        this.isNextDisabled = (this.currentPage >= this.totalPages);
+    get isPreviousDisabled() {
+        return this.currentPage <= 1;
+    }
+
+    get isNextDisabled() {
+        return this.currentPage >= Math.ceil(this.totalRecords / this.pageSize);
     }
 }

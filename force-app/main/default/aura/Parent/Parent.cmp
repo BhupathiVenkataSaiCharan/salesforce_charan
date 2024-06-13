@@ -3,7 +3,8 @@
     <aura:attribute name="label" type="String"/>
     <aura:attribute name="eventCount" type="Integer" default="0"/>
 
-    <aura:handler name="cmpEvent" event="c:ComponentEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler name="cmpEvent" event="c:ComponentEvent"
+    action="{!c.handleComponentEvent}"/>
 
     <h1>Cmoponent Event Handler</h1>
 

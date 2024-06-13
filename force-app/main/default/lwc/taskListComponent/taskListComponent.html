@@ -1,0 +1,9 @@
+<template>
+    <lightning-input label="New Task" value={newTask} onchange={handleInputChange}></lightning-input>
+    <lightning-button label="Add Task" onclick={handleAddTask}></lightning-button>
+    <ul>
+        <template for:each={tasks} for:item="task">
+            <li key={task}>{task}</li>
+        </template>
+    </ul>
+</template>

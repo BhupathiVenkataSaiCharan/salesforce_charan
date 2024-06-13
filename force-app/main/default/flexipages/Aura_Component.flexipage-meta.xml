@@ -3,8 +3,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>accountListBackup</componentName>
-                <identifier>c_accountListBackup</identifier>
+                <componentName>compEventParent</componentName>
+                <identifier>c_compEventParent</identifier>
             </componentInstance>
         </itemInstances>
         <name>region1</name>
@@ -13,8 +13,14 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>Parent</componentName>
-                <identifier>c_Parent</identifier>
+                <componentName>accountListBackup</componentName>
+                <identifier>c_accountListBackup</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>formBasedLds</componentName>
+                <identifier>c_formBasedLds</identifier>
             </componentInstance>
         </itemInstances>
         <name>region2</name>
@@ -27,12 +33,18 @@
                 <identifier>c_accountsList</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>programmingBasedLds</componentName>
+                <identifier>c_programmingBasedLds</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>region3</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Aura Component</masterLabel>
     <template>
-        <name>flexipage:appHomeTemplateHeaderTwoColumnsLeftSidebar</name>
+        <name>flexipage:appHomeTemplateHeaderTwoColumnsEqualWidth</name>
     </template>
     <type>AppPage</type>
 </FlexiPage>

@@ -239,6 +239,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MathOperations</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MathOperationsTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MicrobatchSelfRegController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -319,6 +327,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>compEventClass</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>dynamicIntro</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -340,6 +352,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>practice</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>searchAcc_displayConOpp</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

@@ -1,24 +1,21 @@
 <template>
-    <lightning-card title="List of Accounts">
-        <lightning-datatable 
-            key-field="Id"
-            data={data} 
-            columns={columns} 
-            hide-checkbox-column="true">
-        </lightning-datatable>
-
-        <div class="slds-m-top_medium">
-            <lightning-button 
-                label="Previous" 
-                onclick={handlePrev} 
-                disabled={isPrevDisabled}>
-            </lightning-button>
-            <lightning-button 
-                label="Next" 
-                onclick={handleNext} 
-                disabled={isNextDisabled}>
-            </lightning-button>
-            <p>Page {currentPage} of {totalPages}</p>
-        </div>
+    <lightning-card title="List of Accounts"> 
+        <lightning-input label="Search Name" value={searchName} onchange={handleName}></lightning-input>  
+        <template if:true={data}>
+            <lightning-datatable 
+                key-field="Id"
+                data={data} 
+                columns={columns} 
+                hide-checkbox-column="true">
+            </lightning-datatable>
+            <div class="slds-m-top_medium">
+                <lightning-button label="Previous" onclick={handlePrevious} disabled={isPreviousDisabled}></lightning-button>
+                <lightning-button label="Next" onclick={handleNext} disabled={isNextDisabled}></lightning-button>
+                <!-- <p>Page {currentPage} of {Math.ceil(totalRecords / pageSize)}</p> -->
+            </div>
+        </template>
+        <template if:false={data}>
+            <p>No Records Found</p>
+        </template>
     </lightning-card>
 </template>

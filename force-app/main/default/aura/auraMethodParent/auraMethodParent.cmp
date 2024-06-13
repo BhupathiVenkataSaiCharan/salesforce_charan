@@ -1,0 +1,18 @@
+<aura:component>
+    <aura:attribute name="pempname" type="String"/>
+    <aura:attribute name="pempage" type="Integer"/>
+    <aura:attribute name="pempdob" type="Date"/>
+
+    <lightning:card title="Employee Data Entry">
+        <lightning:input label="Enter Employee Name" value="{!v.pempname}"/>
+        <lightning:input label="Enter Employee Age" value="{!v.pempage}"/>
+        <lightning:input label="Enter Employee DOB" value="{!v.pempdob}"/>
+
+        <aura:set attribute="actions">
+            <lightning:button label="Submit" variant="brand" onclick="{!c.callme}"/>
+        </aura:set>
+
+    </lightning:card>
+
+    <c:auraMethodChild aura:id="childcomp"/>
+</aura:component>

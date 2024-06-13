@@ -1,0 +1,7 @@
+<template>
+    <lightning-card title="Message from Parent to Child">
+        <lightning-input label="Enter message" value={parentMessage} onchange={handleInputChange}></lightning-input>
+        <lightning-button label="Submit" variant="brand" onclick={handleSubmit}></lightning-button>
+        <c-child-decorator></c-child-decorator>
+    </lightning-card>
+</template>

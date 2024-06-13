@@ -1,0 +1,19 @@
+<aura:component>
+
+    <aura:attribute name="cempname" type="String"/>
+    <aura:attribute name="cempage" type="Integer"/>
+    <aura:attribute name="cempdob" type="Date"/>
+
+    <aura:method name="showempdet" action="{!c.showme}">
+        <aura:attribute name="mempname" type="String"/>
+        <aura:attribute name="mempage" type="Integer"/>
+        <aura:attribute name="mempdob" type="Date"/>
+    </aura:method>
+
+    <lightning:card title="Employee Details">
+        <b>Employee Name:</b>{!v.cempname}              <br/>
+        <b>Employee Age:</b>{!v.cempage}                <br/>
+        <b>Employee DOB:</b>{!v.cempdob}                
+    </lightning:card>
+
+</aura:component>

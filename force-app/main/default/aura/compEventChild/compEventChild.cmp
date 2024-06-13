@@ -11,7 +11,6 @@
         <lightning:input label="Account Name" value="{!v.cacc.Name}"/>
         <lightning:input label="Account Phone" value="{!v.cacc.Phone}"/>
         <lightning:input label="Account Industry" value="{!v.cacc.Industry}"/>
-        
         <lightning:button label="Submit" onclick="{!c.callme}"/>
     </lightning:card>
 

@@ -10,4 +10,4 @@
             <c:DisplayOpp/>
         </lightning:layoutItem>
     </lightning:layout>
-</aura:application>	
+</aura:application>
