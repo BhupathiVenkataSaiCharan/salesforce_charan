@@ -1,0 +1,8 @@
+<template>
+    <lightning-card title="Program based LDS imperative create record">
+        <lightning-input label="Account Name" value={accName} onchange={handleName}></lightning-input>
+        <lightning-input label="Account Phone" value={accPhone} onchange={handlePhone}></lightning-input>
+
+        <lightning-button label="Submit" onclick={createAcc}></lightning-button>
+    </lightning-card>
+</template>
