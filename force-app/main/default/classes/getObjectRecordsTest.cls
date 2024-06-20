@@ -1,29 +1,53 @@
 @isTest
 private class getObjectRecordsTest {
-	
-    //positive scenario
+
+    //mock record creation
+    private static Account createMockAccountForDeleteRecord(){
+        
+        Account acc = new Account(Name = 'Test');
+        insert acc;
+
+        Account insertedAccount = [SELECT Id,Name FROM Account WHERE Id = :acc.Id LIMIT 1];
+        System.assertNotEquals(null, insertedAccount, 'no accounts are inserted');
+
+        return insertedAccount;
+    }
+    
+    //if ID is passed
     @isTest
-    static void testGetAccounts(){
-       	Account accName= new Account(Name='Test');
-        insert accName;
-        
-        List<Account> result = getObjectRecords.getAccounts('Test');
-        
-        system.assertEquals(1,result.size(), 'Accounts doesnt match');
-        //system.assertEquals('Test',result[0].Name, 'Accounts doesnt match');
-        
+    static void testDeleteRecordSuccess(){
+
+        Account acc = createMockAccountForDeleteRecord();
+
+        Map<String, Object> result = getObjectRecords.deleteRecord(acc.Id);
+
+        //List<Account> deletedAccount = [SELECT Id,Name FROM Account WHERE Id = :acc.Id LIMIT 1];
+        Assert.areEqual(true,result.get('STATUS'));
     }
 
-    //negative scenario
+    // if ID is Fake
     @isTest
-    static void testDontGetAccounts(){
-       	Account accName= new Account(Name='Test');
-        insert accName;
-        
-        Test.startTest();
-        List<Account> result = getObjectRecords.getAccounts('names');
-        Test.stopTest();
-        
-        system.assertEquals(0,result.size(), 'no match found');
+    static void testDeleteRecordInvalidId(){
+
+        Account acc = createMockAccountForDeleteRecord();
+
+        Map<String, Object> result = getObjectRecords.deleteRecord('XXXXX');
+
+        //List<Account> deletedAccount = [SELECT Id,Name FROM Account WHERE Id = :acc.Id LIMIT 1];
+        Assert.areEqual(false,result.get('STATUS'));
+        Assert.areEqual('INVALID ID',result.get('ERROR'));
+    }
+
+    // if ID is NULL
+    @isTest
+    static void testDeleteRecordNullId(){
+
+        Account acc = createMockAccountForDeleteRecord();
+
+        Map<String, Object> result = getObjectRecords.deleteRecord(NULL);
+
+        //List<Account> deletedAccount = [SELECT Id,Name FROM Account WHERE Id = :acc.Id LIMIT 1];
+        Assert.areEqual(false,result.get('STATUS'));
+        Assert.areEqual('ID IS NULL',result.get('ERROR'));
     }
 }

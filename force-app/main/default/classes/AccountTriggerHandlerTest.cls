@@ -2,8 +2,10 @@
 public class AccountTriggerHandlerTest {
     
     @isTest
-    private static void associateTest() {
+    private static void AssociateAccountwithContact() {
 
+
+        AccountTriggerHandler.associateAccountwithContact();
     }
 
 }

@@ -1,11 +1,10 @@
-// Import necessary modules
 import { LightningElement, track, wire } from 'lwc';
 import getAccounts from '@salesforce/apex/getObjectRecords.getAccounts';
 import getAccountsCount from '@salesforce/apex/getObjectRecords.getAccountsCount';
 import deleteRecord from '@salesforce/apex/getObjectRecords.deleteRecord';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import {refreshApex} from '@salesforce/apex';
-
 
 // Define actions for row actions column
 const actions = [
@@ -15,7 +14,7 @@ const actions = [
 
 // Define columns for the datatable
 const columns = [
-    { label: 'Index', fieldName: 'serialNumber', type: 'number' },
+    // { label: 'Index', fieldName: 'serialNumber', type: 'number' },
     { label: 'Id', fieldName: 'Id' },
     { label: 'Name', fieldName: 'Name', editable: true },
     { label: 'Industry', fieldName: 'Industry', editable: true },
@@ -24,6 +23,7 @@ const columns = [
         typeAttributes: { rowActions: actions },
     }
 ];
+
 export default class DisplayObjectRecords extends LightningElement {
     @track data;
     columns = columns;
@@ -31,6 +31,8 @@ export default class DisplayObjectRecords extends LightningElement {
     @track currentPage = 1;
     @track totalRecords = 0;
     pageSize = 10;
+
+    offSet;
 
     showEdit = false;
     showDelete = false;
@@ -52,10 +54,7 @@ export default class DisplayObjectRecords extends LightningElement {
     wiredAccounts(result) {
         this.refreshedData = result;
         if (result.data) {
-            this.data = result.data.map((item, index) => ({
-                ...item,
-                serialNumber: (this.currentPage - 1) * this.pageSize + index + 1
-            }));
+            this.data = result.data;
         } else if (result.error) {
             console.error('Error fetching accounts:', result.error);
         }
@@ -111,15 +110,26 @@ export default class DisplayObjectRecords extends LightningElement {
     // Confirm delete operation
     confirmDelete() {
         deleteRecord({ recordId: this.selectedRecordId })
-            .then(() => {
-                console.log('Record deleted successfully');
+            .then((result) => {
+                console.log(JSON.stringify(result));
                 this.closeDelete();
                 refreshApex(this.refreshedData);
+                this.showToast('Record Deleted',result.MESSAGE,'success');
             })
             .catch(error => {
                 console.error('Error deleting record:', error);
                 this.closeDelete();
+                this.showToast('Record not Deleted','Deletion Failed','error');
             });
+    }
+
+    showToast(title,message,variant){
+        const event = new ShowToastEvent({
+            title: title,
+            message:message,
+            variant:variant
+        });
+        this.dispatchEvent(event);
     }
 
     // Close delete modal
@@ -131,5 +141,9 @@ export default class DisplayObjectRecords extends LightningElement {
     updateRecord(){
         this.showEdit = false;
         refreshApex(this.refreshedData);
+    }
+
+    renderedCallback(){
+        this.offSet = (this.currentPage - 1) * this.pageSize;
     }
 }

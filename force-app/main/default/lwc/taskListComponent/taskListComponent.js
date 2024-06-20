@@ -16,4 +16,8 @@ export default class TaskListComponent extends LightningElement {
             this.newTask = ''; // Clear the newTask input
         }
     }
+
+    count = 0;
+
+    
 }

@@ -32,12 +32,30 @@ public class getObjectRecords {
     }
 
     @AuraEnabled
-    public static void deleteRecord(String recordId) {
+    public static Map<String, Object> deleteRecord(String recordId) {
+
+        Map<String, Object> result = new Map<String, Object>();
         try {
-            Account acc = [SELECT Id FROM Account WHERE Id = :recordId LIMIT 1];
-            delete acc;
+            Database.DeleteResult dr = Database.delete(recordId);
+            System.debug('delete result:' +dr.getErrors());
+            if (dr.isSuccess()) {
+                result.put('STATUS',true);
+                result.put('MESSAGE' ,'ACCOUNT DELETED FOR ID : '+recordId);
+
+                System.debug('Successfully deleted account with ID: ' + dr.getId());
+            }
+        } catch (StringException se) {
+            result.put('STATUS',false);
+            result.put('ERROR','INVALID ID');
+        } catch (ListException le) {
+            result.put('STATUS',false);
+            result.put('ERROR','ID IS NULL');
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            result.put('STATUS',false);
+            result.put('ERROR',e);
         }
+        
+
+        return result;
     }
 }
