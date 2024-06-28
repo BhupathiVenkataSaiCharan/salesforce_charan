@@ -1,0 +1,17 @@
+<!-- 
+
+* create a contact on account record page and associate it
+* apex class used CreateAccountRelatedContact
+
+-->
+
+<template>
+    <lightning-card label="Create Contact and Relate it to Account">
+        <div class="slds-p-horizontal_small">
+            <lightning-input label="First Name" name="firstName" value={firstName} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Last Name" name="lastName" value={lastName} onchange={handleInputChange} ></lightning-input>
+            <lightning-input label="Email" name="email" value={email} onchange={handleInputChange}></lightning-input>
+            <lightning-button label="Create Contact" variant="brand" onclick={handleCreateContact} class="slds-m-top_medium"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

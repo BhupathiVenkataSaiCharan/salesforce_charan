@@ -12,29 +12,28 @@ public class SendEmailToContact {
     @AuraEnabled
     public static void sendEmail(String contactId) {
         Contact contact = [SELECT Id, Name, Email, Phone FROM Contact WHERE Id = :contactId LIMIT 1];
-
-        if (contact != null && contact.Email != null) {
-            List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+        system.debug('Email :::' +contact.Email);
+        if (contact.Email != null) {
+            // Define the email template
+            String templateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Send_Email_To_Contacts' LIMIT 1].Id;
+            system.debug('templateId :::' +templateId);
+            // Create an instance of SingleEmailMessage
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             
-            // Set recipient
-            mail.setToAddresses(new String[] { contact.Email });
+            // Set the target object id (the contact id)
+            mail.setTargetObjectId(contact.Id);
             
-            // Set subject
-            mail.setSubject('Contact Details');
+            // Use the template
+            mail.setTemplateId(templateId);
             
-            // Construct email body
-            String body = 'Dear ' + contact.Name + ',<br/><br/>Here are the contact details:<br/>'
-                        + 'Name: ' + contact.Name + '<br/>'
-                        + 'Email: ' + contact.Email + '<br/>'
-                        + 'Phone: ' + contact.Phone + '<br/><br/>Thank you!';
-            mail.setHtmlBody(body);
+            // Ensure that the email is sent even if the target object is a user
+             //mail.setWhatId(contact.Id);
             
-            // Add email to the list
-            emails.add(mail);
+            // Specify to send email based on the contact's email address
+            mail.setSaveAsActivity(false);
             
-            // Send email
-            Messaging.sendEmail(emails);
+            // Send the email
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
         }
     }
 }

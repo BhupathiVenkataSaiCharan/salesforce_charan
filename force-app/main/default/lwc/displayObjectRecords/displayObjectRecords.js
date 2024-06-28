@@ -28,7 +28,7 @@ export default class DisplayObjectRecords extends LightningElement {
     @track data;
     columns = columns;
     searchName = '';
-    @track currentPage = 1;
+    @track pageNumber = 1;
     @track totalRecords = 0;
     pageSize = 10;
 
@@ -50,7 +50,7 @@ export default class DisplayObjectRecords extends LightningElement {
     }
 
     // Wire method to fetch accounts based on search and pagination
-    @wire(getAccounts, { accName: '$searchName', pageNumber: '$currentPage', pageSize: '$pageSize' })
+    @wire(getAccounts, { accName: '$searchName', pageNumber: '$pageNumber', pageSize: '$pageSize' })
     wiredAccounts(result) {
         this.refreshedData = result;
         if (result.data) {
@@ -63,31 +63,31 @@ export default class DisplayObjectRecords extends LightningElement {
     // Handle search input change
     handleName(event) {
         this.searchName = event.target.value;
-        this.currentPage = 1; // Reset to first page when searching
+        this.pageNumber = 1; // Reset to first page when searching
     }
 
     // Handle previous page navigation
     handlePrevious() {
-        if (this.currentPage > 1) {
-            this.currentPage -= 1;
+        if (this.pageNumber > 1) {
+            this.pageNumber -= 1;
         }
     }
 
     // Handle next page navigation
     handleNext() {
-        if (this.currentPage < Math.ceil(this.totalRecords / this.pageSize)) {
-            this.currentPage += 1;
+        if (this.pageNumber < Math.ceil(this.totalRecords / this.pageSize)) {
+            this.pageNumber += 1;
         }
     }
 
     // Determine if previous button should be disabled
     get isPreviousDisabled() {
-        return this.currentPage <= 1;
+        return this.pageNumber <= 1;
     }
 
     // Determine if next button should be disabled
     get isNextDisabled() {
-        return this.currentPage >= Math.ceil(this.totalRecords / this.pageSize);
+        return this.pageNumber >= Math.ceil(this.totalRecords / this.pageSize);
     }  
 
     // Handle row action (edit or delete)
@@ -144,6 +144,6 @@ export default class DisplayObjectRecords extends LightningElement {
     }
 
     renderedCallback(){
-        this.offSet = (this.currentPage - 1) * this.pageSize;
+        this.offSet = (this.pageNumber - 1) * this.pageSize;
     }
 }
