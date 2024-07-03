@@ -8,7 +8,8 @@
 public class CreateAccountRelatedContact {
     
     @AuraEnabled
-    public static Contact createContact(String accId, String accFName, String accLName, String accEmail){
+    public static String createContact(String accId, String accFName, String accLName, String accEmail){
+        Map<String, Object> auraResult = new Map<String, Object>();
         try {
             Contact Con = new Contact(
                 AccountId = accId,
@@ -17,9 +18,17 @@ public class CreateAccountRelatedContact {
                 Email = accEmail
             );
             insert Con;
-            return Con;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            auraResult.put('STATUS', true);
+            auraResult.put('MESSAGE', 'Contact Created Successfully');
+        } catch (DmlException de) {
+            auraResult.put('STATUS', false);
+            auraResult.put('ERROR', de.getMessage());
+            system.debug('error:::' +de);
+        } catch (StringException se) {
+            auraResult.put('STATUS', false);
+            auraResult.put('ERROR', se.getMessage());
+            system.debug('error:::' +se);
         }
+        return JSON.serialize(auraResult);
     }
 }

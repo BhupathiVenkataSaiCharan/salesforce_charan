@@ -31,9 +31,16 @@ export default class CreateAccountRelatedContact extends LightningElement {
             accEmail : this.email
         })
         .then(result=>{
-            this.showToast('SUCCESS','Contact Created Successfully', 'success');
+            const jsonObj = JSON.parse(result);
+            if(jsonObj.STATUS){
+                this.showToast('SUCCESS',jsonObj.MESSAGE, 'success');
+            }
+            else{
+                this.showToast('FAILED',jsonObj.ERROR, 'error');
+            }
             // Refresh the contacts related list
             this.dispatchEvent(new RefreshEvent());
+
         })
         .catch(error=>{
             this.showToast('FAILED','Failed To Create Contact', 'error');
