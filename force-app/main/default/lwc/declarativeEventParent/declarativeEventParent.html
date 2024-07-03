@@ -1,0 +1,11 @@
+<!-- 
+* parent component to get the entered details from child through declarative event 
+-->
+<template>
+    <c-declarative-event-child onempdetails={showData}></c-declarative-event-child>
+    <lightning-card title="Employee Details (Parent)">
+        Employee Name : {employeeName} <p></p>
+        Employee Email : {employeeEmail} <p></p>
+        Employee Phone : {employeePhone} <p></p>
+    </lightning-card>
+</template>

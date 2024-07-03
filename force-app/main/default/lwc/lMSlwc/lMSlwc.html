@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="LMS LWC">
+        <b>Sending Message</b>
+        <lightning-input label="Enter Your Message :" onchange={handleMsg}></lightning-input>
+        <lightning-button label="Publish" onclick={publishMC}></lightning-button>
+        <lightning-button label="Subscribe" onclick={subscribeMC}></lightning-button>
+        <lightning-button label="UnSubscribe" onclick={unsubscribeMC}></lightning-button>
+
+        <b>Received Message</b>
+        <lightning-formatted-text value={receivedMessage}></lightning-formatted-text>
+    </lightning-card>
+</template>

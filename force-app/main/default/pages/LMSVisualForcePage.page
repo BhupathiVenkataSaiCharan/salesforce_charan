@@ -1,0 +1,55 @@
+<apex:page>
+
+    <div>
+        <b>Visual Force Page LMS</b>
+        <b>Sending Message</b>
+        <b>Enter Your Message</b><input type="text" id="userName"/><p></p>
+        <button onclick="publishMC()">Publish Message</button><p></p>
+        <button onclick="subscribeMC()">Subscribe</button><p></p>
+        <button onclick="unsubscribeMC()">UnSubscribe</button><p></p>
+
+        <b>Received Message</b><p></p>
+        <label id="MCmessageText"/>
+    </div>
+
+    <script>
+        //load the message channel
+        var MC = "{!$MessageChannel.customMsgChannel__c}";
+        var subscriptionToMC;
+
+        function publishMC(){
+            const message = {
+                UserName : document.getElementById('userName').value,
+                PhoneNumber : '1234567890'
+            };
+            sforce.one.publish(MC,message);     //sforce.one.publish(messageChannel,message)
+        }
+        
+        function subscribeMC(){
+            try {
+
+                if(subscriptionToMC == undefined){
+                subscriptionToMC = sforce.one.subscribe(MC, displayMessage);    //sforce.one.publish(messageChannel,function)
+            }
+            } catch (error) {
+                console.log('error');
+            }
+        }
+
+        function displayMessage(message){
+            // MCmessageText.innerHTML = message ? JSON.stringify(message, null, '\t') : 'no message payload'   //1
+                                        //OR
+            var txtlabel = document.querySelector('#MCmessageText');                                    //2
+            txtlabel.innerHTML = message ? JSON.stringify(message, null, '\t') : 'no message payload';   //2
+        }
+
+        function unsubscribeMC(){
+            if(subscriptionToMC){
+                sforce.one.unsubscribe(subscriptionToMC);
+                subscriptionToMC = undefined;
+            }
+        }
+
+    </script>
+
+</apex:page>

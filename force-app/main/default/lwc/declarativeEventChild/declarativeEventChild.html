@@ -1,0 +1,13 @@
+<!-- 
+* send employee data frmo child to parent using declarative event 
+* parent component : declarativeEventChild
+-->
+<template>
+    <lightning-card title="Child to Parent declarative event eg:2">
+        <lightning-input label="Enter Employee Name" onchange={handleChange} name="Name" value={empName}></lightning-input>
+        <lightning-input label="Enter Employee Email" onchange={handleChange} name="Email" value={empEmail}></lightning-input>
+        <lightning-input label="Enter Employee Phone" onchange={handleChange} name="Phone" value={emPhone}></lightning-input>
+
+        <lightning-button label="Send Details" variant="brand" onclick={handleSubmit}></lightning-button>
+    </lightning-card>
+</template>

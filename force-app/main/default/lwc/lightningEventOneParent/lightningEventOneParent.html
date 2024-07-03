@@ -1,0 +1,7 @@
+<!-- This is parent component to perform the events dispatched from child -->
+<template>
+    <lightning-card title="Child to parent declarative event eg:1">
+        Counter : {count} <p></p>
+        <c-lightning-event-one onevtinc={incCount} onevtdec={decCount}></c-lightning-event-one>
+    </lightning-card>
+</template>

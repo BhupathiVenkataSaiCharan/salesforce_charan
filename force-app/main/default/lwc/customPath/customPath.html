@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Opportunity Path">
+        <div class="slds-grid slds-path slds-path_has-coaching slds-path_has-coaching">
+            <template for:each={stages} for:item="stage">
+                <div key={stage.value} class={stageClasses(stage.value)}>
+                <!-- <div key={stage.value}> -->
+                    <a href="javascript:void(0);" class="slds-path__link" onclick={handleStageClick}>
+                        <span class="slds-path__stage">
+                            <svg class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                            </svg>
+                            <span class="slds-path__title">{stage.label}</span>
+                        </span>
+                    </a>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
