@@ -4,7 +4,7 @@ public class AccountTriggerHandler {
     try{
         List<Contact> conList=new List<Contact>();
      for(Account acc:accRecords){
-         Contact con = new Contact(LastName=acc.Name+'associated', AccountId= acc.Id);
+         Contact con = new Contact(LastName=acc.Name+'assosiated', AccountId= acc.Id);
          conList.add(con);
      }
      insert conList;

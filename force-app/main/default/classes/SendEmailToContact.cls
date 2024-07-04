@@ -37,7 +37,3 @@ public class SendEmailToContact {
         }
     }
 }
-
-
-
-

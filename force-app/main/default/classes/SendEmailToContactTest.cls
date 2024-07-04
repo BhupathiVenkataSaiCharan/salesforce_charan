@@ -1,53 +1,76 @@
 @isTest
 public class SendEmailToContactTest {
-    
     @isTest
     static void testSendEmail() {
-        // Create a test User to run as
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User']; // Replace with your profile name
-        User testUser = new User(
-            FirstName = 'Test',
-            LastName = 'User',
-            Email = 'testuser@example.com',
-            Username = 'testuser@example.com',
-            Alias = 'tuser',
-            ProfileId = testProfile.Id,
-            TimeZoneSidKey = 'America/Los_Angeles',
-            LocaleSidKey = 'en_US',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US'
+        // Create a test contact
+        Contact testContact = new Contact(
+            LastName = 'Test',
+            Email = 'test@example.com',
+            Phone = '1234567890'
         );
-        insert testUser;
-        
-        // Assign the test user to the current context
-        System.runAs(testUser) {
-            // Create a test Contact
-            Contact testContact = new Contact(
-                FirstName = 'Test',
-                LastName = 'Contact',
-                Email = 'test@example.com',
-                Phone = '1234567890'
-            );
-            insert testContact;
-            
-            // Create an EmailTemplate record for testing
-            EmailTemplate testTemplate = new EmailTemplate(
-                DeveloperName = 'Send_Email_To_Contacts',
-                Subject = 'Test Email',
-                HtmlValue = '<html><body>This is a test email.</body></html>', // Example HTML content
-                Body = 'This is a test email.' // Example plain text content
-                // Add other required fields
-            );
-            insert testTemplate;
-            
-            Test.startTest();
-            // Call the method under test
+        insert testContact;
+
+        // Create a test email template
+        EmailTemplate testTemplate = new EmailTemplate(
+            Name = 'Test Template',
+            DeveloperName = 'Send_Email_To_Contacts',
+            Subject = 'Test Email',
+            HtmlValue = '<html><body>Test Email</body></html>',
+            Body = 'Test Email'
+        );
+        insert testTemplate;
+
+        // Call the method to send email
+        Test.startTest();
+        SendEmailToContact.sendEmail(testContact.Id);
+        Test.stopTest();
+
+        // Verify that an email was sent
+        List<EmailMessage> emails = [SELECT Id FROM EmailMessage WHERE ToAddress = :testContact.Email];
+        System.assertEquals(1, emails.size(), 'An email should have been sent to the contact.');
+    }
+
+    @isTest
+    static void testSendEmailNoEmail() {
+        // Create a test contact with no email
+        Contact testContact = new Contact(
+            LastName = 'Test No Email',
+            Phone = '1234567890'
+        );
+        insert testContact;
+
+        // Call the method to send email
+        Test.startTest();
+        SendEmailToContact.sendEmail(testContact.Id);
+        Test.stopTest();
+
+        // Verify that no email was sent
+        List<EmailMessage> emails = [SELECT Id FROM EmailMessage WHERE ToAddress = :testContact.Email];
+        System.assertEquals(0, emails.size(), 'No email should have been sent to the contact with no email.');
+    }
+
+    @isTest
+    static void testSendEmailNoTemplate() {
+        // Create a test contact
+        Contact testContact = new Contact(
+            LastName = 'Test No Template',
+            Email = 'testnotemplate@example.com',
+            Phone = '1234567890'
+        );
+        insert testContact;
+
+        // Ensure no email templates exist with the specified DeveloperName
+        List<EmailTemplate> templates = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Send_Email_To_Contacts'];
+        delete templates;
+
+        // Call the method to send email
+        Test.startTest();
+        try {
             SendEmailToContact.sendEmail(testContact.Id);
-            Test.stopTest();
-            
-            // Verify if the email was sent (example assertion)
-            List<Messaging.SingleEmailMessage> sentEmails = [SELECT Id FROM Messaging.SingleEmailMessage];
-            System.assertEquals(1, sentEmails.size(), 'Expected one email to be sent.');
+            System.assert(false, 'Exception should have been thrown due to missing template.');
+        } catch (Exception e) {
+            System.assert(e.getMessage().contains('No rows to assign'), 'Expected exception due to missing template.');
         }
+        Test.stopTest();
     }
 }
