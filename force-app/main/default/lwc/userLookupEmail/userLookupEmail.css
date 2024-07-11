@@ -1,0 +1,19 @@
+.slds-box {
+    border: 1px solid #d8dde6;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.slds-listbox__item {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 1px solid #d8dde6;
+}
+
+.slds-listbox__item:hover {
+    background-color: #f4f6f9;
+}

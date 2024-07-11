@@ -1,0 +1,19 @@
+<template>
+   <lightning-card title="User Lookup and Send Email to User Selected">
+        <lightning-input type="Search" name={searchedUser} onchange={handleSearchUser}></lightning-input>
+
+
+      <template if:true={isActive}>
+         <ul class="slds-box slds-m-top_small">
+            <template for:each={users} for:item="user">
+               <li key={user.Id} data-id={user.Id} data-name={user.Name} onclick={handleUserSelect} class="slds-listbox__item">
+                  {user.Name} - {user.Email}
+               </li>
+            </template>
+         </ul>
+      </template>
+
+        <br>
+        <lightning-button variant="brand" label="Send Email" onclick={sendEmail}></lightning-button>
+   </lightning-card> 
+</template>

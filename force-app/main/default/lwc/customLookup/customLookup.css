@@ -1,0 +1,13 @@
+.addIcon  {
+    padding: 0.2rem !important;
+    /* height: 1rem !important;Adjust the height to your desired size */
+}
+.slds-media{
+    display: flex;  
+    align-items: center;
+}
+.lookup-section{
+    position: relative !important;
+    max-height: 120px;
+    overflow: auto;
+}
