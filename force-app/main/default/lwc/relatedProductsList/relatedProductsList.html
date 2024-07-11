@@ -1,0 +1,46 @@
+<template>
+    <header class="slds-media slds-media_center slds-has-flexi-truncate slds-p-around_x-small" style="background-color: #f3f3f3">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container slds-icon-standard-account" title="account">
+                <lightning-icon icon-name="custom:custom1" alternative-text="Approved" title="Approved" size="small"></lightning-icon>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <h2 class="slds-card__header-title">
+                <a href={linkRefRelatedOppLineItems} class="slds-card__header-link slds-truncate" title="Products List">
+                    <span>Product List items ({numberOfItem})</span>
+                </a>
+                </h2>
+            </div>
+        </header>
+    <lightning-card>
+        <template if:true={opportunityLineItems}>
+            <ul>
+                <template for:each={opportunityLineItems} for:item="item">
+                    <li key={item.Id} class="slds-item slds-m-around_x-small">
+                        <p data-id={item.Id} onclick={openOppLineItemRecordPage}>
+                            <a href={linkRefOppLineItem}>{item.Product2.Name}</a>
+                        </p>
+                        <p>
+                            Quantity :   {item.Quantity}
+                        </p>
+                        <p>
+                            Sales Price :   {item.UnitPrice}
+                        </p>
+                        <p>
+                            Date :   {item.ServiceDate}
+                        </p>
+                    </li>
+                </template>
+            </ul>
+            <footer class="slds-card__footer">
+                <a class="slds-card__footer-action" href={linkRefRelatedOppLineItems}>View All
+                    <span class="slds-assistive-text">View</span>
+                </a>
+            </footer>
+        </template>
+        <template if:false={opportunityLineItems}>
+            <p>No products found for this opportunity.</p>
+        </template>
+    </lightning-card>
+</template>
