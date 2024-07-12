@@ -18,7 +18,7 @@ public class UserLookupEmailController {
         String[] toAddresses = new String[] { userEmail };
         mail.setToAddresses(toAddresses);
         mail.setSubject('Subject of the Email');
-        mail.setPlainTextBody('Sending Email to the selected user from org using lookup field');
+        mail.setPlainTextBody('Sending Email to the selected user from org using lookup');
         
         // Send the email
         Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
