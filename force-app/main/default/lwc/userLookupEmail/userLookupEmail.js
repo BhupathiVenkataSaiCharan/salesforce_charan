@@ -16,6 +16,8 @@ export default class UserLookupEmail extends LightningElement {
         this.userName = event.target.value;
         if(this.userName != ''){
             this.toggleActive = true;
+        }else{
+            this.toggleActive =false;
         }
     }
 
