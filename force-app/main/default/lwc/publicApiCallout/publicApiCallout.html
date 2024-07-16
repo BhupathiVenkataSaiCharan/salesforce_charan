@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Public API callout">
+
+        <template if:true={isLoading}>
+            <div>
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </div>
+        </template>
+        
+
+        <lightning-button label="Call API" variant="brand" onclick={showAPIData}></lightning-button>
+
+        <template if:true={data}>
+                <p>Activity : {data.activity}</p>
+                <p>Type : {data.type}</p>
+                <p>Participants : {data.participants}</p>
+                <p>Price : {data.price}</p>
+                <p>Link : {data.link}</p>
+                <p>Key : {data.key}</p>
+                <p>Accessibility : {data.accessibility}</p>
+        </template>
+    </lightning-card>
+</template>
