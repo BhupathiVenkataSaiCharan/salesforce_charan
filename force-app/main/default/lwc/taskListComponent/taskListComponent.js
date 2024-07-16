@@ -18,6 +18,5 @@ export default class TaskListComponent extends LightningElement {
     }
 
     count = 0;
-
     
 }

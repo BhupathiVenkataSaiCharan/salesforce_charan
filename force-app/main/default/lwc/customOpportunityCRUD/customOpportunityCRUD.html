@@ -1,0 +1,21 @@
+<template>
+   <lightning-card title="Add and Remove rows Dynamically">
+        <template for:each={rows} for:item="row">
+            <div key={row.index} class="slds-box slds-m-bottom_x-small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12">
+                        <p>{row.index}</p>
+                    </div>
+                    <div class="slds-col slds-size_5-of-12">
+                        <lightning-input label="Name" value={row.Name} data-id={row.index} onchange={handleNameChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning-button label="Remove" data-id={row.index} onclick={handleRemove} variant="destructive"></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <lightning-button label="Add Row" onclick={handleAddRow} class="slds-m-top_medium"></lightning-button>
+        <lightning-button label="Save" onclick={handleSave} class="slds-m-top_medium"></lightning-button>
+   </lightning-card> 
+</template>
