@@ -2,8 +2,8 @@ import { LightningElement, track } from 'lwc';
 
 export default class PublicApiCallout extends LightningElement {
     @track data;
-    endpoint = 'https://h9qp3tzr-3001.inc1.devtunnels.ms/';
-    // endpoint = 'https://www.boredapi.com/api/activity';        
+    endpoint = 'https://7wd3dznw-3000.inc1.devtunnels.ms/';          //my api url
+    // endpoint = 'https://www.boredapi.com/api/activity';                 //url from scenarios blog
     @track isLoading = false;
 
     showAPIData() {
@@ -25,7 +25,6 @@ export default class PublicApiCallout extends LightningElement {
                 console.log('Success:', responseData);
                 this.data = responseData;
                 this.isLoading = false;
-                // Handle the response data here
             } else {
                 console.error('Error:', response.statusText);
                 this.isLoading = false;
