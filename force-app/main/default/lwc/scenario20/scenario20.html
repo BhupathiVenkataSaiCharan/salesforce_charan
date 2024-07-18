@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Scenario 20 - refresh component">
+        <template if:true={data}>
+                <p>Account Name : {data.Name}</p>
+                <p>Account Industry : {data.Industry}</p>
+        </template>
+        <template if:true={error}>
+            No data found
+        </template>
+        <lightning-button onclick={connectedCallbacking} label="refresh" variant="brand"></lightning-button>
+    </lightning-card>    
+</template>
