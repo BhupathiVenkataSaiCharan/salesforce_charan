@@ -1,0 +1,6 @@
+<template>
+    <lightning-input label="Enter Your Name" name="UserName" value={userName} onchange={handleInput}></lightning-input>
+    <lightning-input label="Enter Your Email" name="UserEmail" value={userEmail} onchange={handleInput}></lightning-input>
+    <lightning-input label="Enter Your Phone" name="UserPhone" value={userPhone} onchange={handleInput}></lightning-input>
+    <lightning-button class="upload" label="Send Data" variant="brand" onclick={sendData}></lightning-button>
+</template>

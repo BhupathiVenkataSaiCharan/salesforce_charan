@@ -1,0 +1,11 @@
+.upload{
+    --slds-c-button-brand-color-background : green;
+    --slds-c-button-brand-text-color : black;
+}
+.upload:hover{
+    --slds-c-button-brand-color-background : green;
+    --slds-c-button-brand-text-color : black;
+}
+.slds-input{
+    --slds-c-input-text-color-focus : red !important;
+}

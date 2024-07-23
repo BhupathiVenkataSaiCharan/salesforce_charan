@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Capture Data From Child to Parent">
+
+        <!-- Child Component -->
+        <c-send-data-to-parent onuserdata={handleData}></c-send-data-to-parent>
+
+        <!-- Display Data from Child in Parent Table -->
+        <lightning-datatable key-field="id" data={data} columns={columns}></lightning-datatable>
+    </lightning-card>
+</template>

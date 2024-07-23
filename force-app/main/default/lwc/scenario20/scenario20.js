@@ -9,7 +9,7 @@ export default class Scenario20 extends LightningElement {
     error;
     updatedData;
 
-    renderedCallback(){
+    connectedCallbacking(){
         refreshApex(this.updatedData);
     }
 
