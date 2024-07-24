@@ -30,6 +30,7 @@ global class webServiceController {
                 res.statusCode = 200;
                 jsonResponse.put('status', true);
                 jsonResponse.put('message', 'User deactivated successfully.');
+                jsonResponse.put('ID', userToDeactivate[0].Id);
             } else {
                 res.statusCode = 404;
                 jsonResponse.put('status', false);
