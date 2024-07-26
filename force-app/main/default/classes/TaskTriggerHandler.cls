@@ -9,11 +9,13 @@ public class TaskTriggerHandler {
         // check the WhoId field and get the prefix of the selected Contact or Lead and add it to the set created
         for(Task tsk : tasks){
             if(tsk.WhoId != null){
-                string keyPrefix = String.valueOf(tsk.WhoId).substring(0,3);
-                if(Schema.SObjectType.Contact.getKeyPrefix().equals(keyPrefix)){
+                string keyPrefix = String.valueOf(tsk.WhoId).substring(0,3);        //to check the first 3 keyprefix of who id
+                if(Schema.SObjectType.Contact.getKeyPrefix().equals(keyPrefix)){    //to match the prefix of contact with the WhoId prefix 
+                    System.debug('keyPrefix: ' + keyPrefix);
+                    System.debug('contact prefix' + Schema.SObjectType.Contact.getKeyPrefix());
                     contactIds.add(tsk.WhoId);
                 }
-                else if(Schema.SObjectType.Lead.getKeyPrefix().equals(keyPrefix)){
+                else if(Schema.SObjectType.Lead.getKeyPrefix().equals(keyPrefix)){  //to match the preix of lead with the WhoId prefix
                     leadIds.add(tsk.WhoId);
                 }
             }
