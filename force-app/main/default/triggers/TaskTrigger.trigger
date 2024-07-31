@@ -1,4 +1,4 @@
-trigger TaskTrigger on Task (before insert) {
+trigger TaskTrigger on Task (before insert, before update) {
 
     switch on trigger.OperationType{
        
@@ -9,7 +9,7 @@ trigger TaskTrigger on Task (before insert) {
             
         }
         when BEFORE_UPDATE{
-            
+            TaskTriggerHandler.assignCustomField(Trigger.new);
         }
         when AFTER_UPDATE{
             
