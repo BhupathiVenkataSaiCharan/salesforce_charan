@@ -1,3 +1,5 @@
 import { LightningElement } from 'lwc';
 
-export default class PortfolioFlows extends LightningElement {}
+export default class PortfolioFlows extends LightningElement {
+
+}
