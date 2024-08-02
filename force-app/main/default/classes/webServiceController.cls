@@ -12,22 +12,22 @@ global class webServiceController {
         Map<String, Object> params = (Map<String, Object>) JSON.deserializeUntyped(requestBody);
 
         String userName = (String) params.get('userName');
-      
-        List<User> userToDeactivate = [SELECT Id, isActive FROM User WHERE userName = :userName and isActive != false LIMIT 1];
 
-
-        if(userToDeactivate.size()>0){
         // Validate input
         if (String.isBlank(userName)) {
             res.statusCode = 400;
             jsonResponse.put('status', false);
             jsonResponse.put('ERROR', 'Invalid input: Email is required.');
+            res.responseBody = Blob.valueOf(JSON.serialize(jsonResponse));
+            res.addHeader('Content-Type', 'application/json');
+            return;
         }
 
         try {
             // Find the user with the given email
-           
-            if (userToDeactivate != null) {
+            List<User> userToDeactivate = [SELECT Id, isActive FROM User WHERE userName = :userName AND isActive = true LIMIT 1];
+
+            if (userToDeactivate.size() > 0) {
                 userToDeactivate[0].isActive = false;
                 update userToDeactivate;
 
@@ -38,20 +38,15 @@ global class webServiceController {
             } else {
                 res.statusCode = 404;
                 jsonResponse.put('status', false);
-                jsonResponse.put('ERROR', 'User not found.');
+                jsonResponse.put('ERROR', 'User not found or already deactivated.');
             }
         } catch (Exception e) {
             res.statusCode = 500;
             jsonResponse.put('status', false);
-            jsonResponse.put('ERROR', 'Error deactivating user: ' +e.getMessage());
+            jsonResponse.put('ERROR', 'Error deactivating user: ' + e.getMessage());
         }
-    }
-    else{
-        jsonResponse.put('status', true);
-        jsonResponse.put('Success', 'User is already Deactivated');
-    }
 
-        res.responseBody=Blob.valueOf(JSON.serialize(jsonResponse));
+        res.responseBody = Blob.valueOf(JSON.serialize(jsonResponse));
         res.addHeader('Content-Type', 'application/json');
     }
 }
