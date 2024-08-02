@@ -12,7 +12,11 @@ global class webServiceController {
         Map<String, Object> params = (Map<String, Object>) JSON.deserializeUntyped(requestBody);
 
         String userName = (String) params.get('userName');
-        
+      
+        List<User> userToDeactivate = [SELECT Id, isActive FROM User WHERE userName = :userName and isActive != false LIMIT 1];
+
+
+        if(userToDeactivate.size()>0){
         // Validate input
         if (String.isBlank(userName)) {
             res.statusCode = 400;
@@ -22,7 +26,7 @@ global class webServiceController {
 
         try {
             // Find the user with the given email
-            List<User> userToDeactivate = [SELECT Id, isActive FROM User WHERE userName = :userName LIMIT 1];
+           
             if (userToDeactivate != null) {
                 userToDeactivate[0].isActive = false;
                 update userToDeactivate;
@@ -41,6 +45,12 @@ global class webServiceController {
             jsonResponse.put('status', false);
             jsonResponse.put('ERROR', 'Error deactivating user: ' +e.getMessage());
         }
+    }
+    else{
+        jsonResponse.put('status', true);
+        jsonResponse.put('Success', 'User is already Deactivated');
+    }
+
         res.responseBody=Blob.valueOf(JSON.serialize(jsonResponse));
         res.addHeader('Content-Type', 'application/json');
     }
