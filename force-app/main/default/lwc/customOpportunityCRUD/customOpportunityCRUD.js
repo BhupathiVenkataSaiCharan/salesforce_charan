@@ -9,6 +9,22 @@ export default class CustomOpportunityCRUD extends LightningElement {
     @track rows=[];
     deletedRowIds = [];
 
+    // isChecked = false;
+    value = 'No';      
+    options = [
+        {label : 'Yes', value : 'Yes'},
+        {label : 'No', value : 'No'}
+    ];
+
+    handleOptions(event){
+        this.value = event.detail.value;
+        // this.isChecked = this.value === 'Yes';
+    }
+
+    get isChecked(){
+        return this.value === 'Yes';
+    }
+
     handleAddRow(){
         const newRow = {
             index : this.rows.length + 1,
