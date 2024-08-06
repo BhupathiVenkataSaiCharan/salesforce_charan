@@ -29,9 +29,13 @@ global class DeactivateUserController {
 
         try {
             // Find the active users with the given federation identifiers
-            List<User> usersToDeactivate = [SELECT Id, Name, isActive, FederationIdentifier 
-                                            FROM User 
-                                            WHERE FederationIdentifier IN :federationIdentifiers AND isActive = true];
+            List<User> usersToDeactivate = [
+                    SELECT Id, Name, isActive, FederationIdentifier 
+                    FROM User 
+                    WHERE isActive = true
+                    AND FederationIdentifier 
+                    IN :federationIdentifiers 
+                ];
 
             if (!usersToDeactivate.isEmpty()) {
                 // Deactivate users
