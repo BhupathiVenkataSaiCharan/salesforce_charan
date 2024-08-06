@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="User Lookup and send Email with record picker">
+        <lightning-record-picker
+            label="Users"
+            placeholder="Search Users..."
+            object-api-name="User"
+            fields="Name, Email"
+            onchange={handleUserSelect}
+            filter={filter}
+        >
+        </lightning-record-picker>
+        <lightning-button variant="brand" label="Send Email" onclick={sendEmail}></lightning-button>
+    </lightning-card>
+</template>

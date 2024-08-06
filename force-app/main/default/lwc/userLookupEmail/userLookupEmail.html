@@ -1,16 +1,6 @@
-<!-- task by lakshmi garu -->
-
-
 <template>
-   <lightning-card title="User Lookup and Send Email to User Selected">
+   <lightning-card title="User Lookup and Send Email with inputsearch and template">
         <lightning-input type="Search" name="userName" value={userName} onchange={handleSearchUser} label="Search User"></lightning-input>
-
-        <!-- <lightning-record-picker
-            label="Accounts"
-            placeholder="Search Accounts..."
-            object-api-name="Account"
-        >
-        </lightning-record-picker> -->
 
         <template if:true={toggleActive}>
             <ul class="slds-list_vertical-space">
@@ -23,8 +13,6 @@
                 </template>
             </ul>
         </template>
-
-
         <br>
         <lightning-button variant="brand" label="Send Email" onclick={sendEmail}></lightning-button>
    </lightning-card> 
