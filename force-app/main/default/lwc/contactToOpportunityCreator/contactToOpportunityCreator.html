@@ -1,0 +1,34 @@
+<!-- 
+ ** create an button action on account record page 
+ ** onclick have to display list of contacts related to account selected
+ ** then after selected multiple contacts create related opporunities by assoicating them to respective accounts and contacts
+-->
+<template>
+    <lightning-card title="Account related Contacts">
+        <template if:true={isCons}>
+            <lightning-datatable 
+                key-field="Id" 
+                data={contacts} 
+                columns={columns}
+                onrowselection={handleRowSelection}>
+            </lightning-datatable>
+            <lightning-button label="Create Opportunities" variant="brand" onclick={openOpps}></lightning-button>
+        </template>
+        <template if:true={isOpps}>
+            <template for:each={conList} for:item="cons">
+                <div key={cons.Id}>
+                    <lightning-record-edit-form object-api-name="Opportunity">
+                        <lightning-card title="New Opportunity">
+                            <lightning-input-field field-name="Name" value={cons.Name}></lightning-input-field>
+                            <lightning-input-field field-name="StageName" value="Prospecting"></lightning-input-field>
+                            <lightning-input-field field-name="CloseDate" required></lightning-input-field>
+                            <lightning-input-field field-name="Contact__c" value={cons.Id}></lightning-input-field>
+                        </lightning-card>
+                    </lightning-record-edit-form>
+                </div>
+            </template>
+            <lightning-button variant="brand" label="Create opp" type="submit" onclick={createGroup}></lightning-button>    
+        </template>
+        
+    </lightning-card>
+</template>
