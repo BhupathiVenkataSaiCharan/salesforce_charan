@@ -68,8 +68,8 @@ export default class ContactToOpportunityCreator extends LightningElement {
         this.template.querySelectorAll('lightning-record-edit-form').forEach(form => {
             form.submit();
         });
-        this.showToast('SUCCESS','Opportunities Created', 'success');
 
+        this.showToast('SUCCESS','Opportunities Created', 'success');
         this.closeAction();
         this.dispatchEvent(new RefreshEvent());        
     }
