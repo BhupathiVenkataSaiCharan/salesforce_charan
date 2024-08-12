@@ -297,4 +297,33 @@ public static void changeRelatedAccount(List<Account> accList){
         }
         update contactList;
     }
+
+
+    //update contact mailing address when account billing address is changed
+    public static void updateConAddrWhenAccAddrUpdated(List<Account> accList) {
+
+        Map<Id, Account> updatedAccData = new Map<Id, Account>();
+        for(Account acc : accList){
+            Account oldAccData = (Account)Trigger.oldMap.get(acc.Id);
+            if(acc.BillingCountry != oldAccData.BillingCountry || acc.BillingCity != oldAccData.BillingCity ||
+                acc.BillingStreet != oldAccData.BillingStreet || acc.BillingPostalCode != oldAccData.BillingPostalCode ||
+                acc.BillingState != oldAccData.BillingState){
+                    updatedAccData.put(acc.Id,acc);
+                }
+        }
+
+        List<Contact> conList = new List<Contact>();
+
+        for(Contact con : [SELECT Id,AccountId,MailingCountry,MailingCity,MailingState,MailingStreet,MailingPostalCode 
+                            FROM Contact WHERE AccountId IN :updatedAccData.keySet()]){
+                                  Account acc = updatedAccData.get(con.Account.Id);
+                                  con.MailingCountry = acc.BillingCountry;
+                                  con.MailingCity = acc.BillingCity;
+                                  con.MailingState = acc.BillingState;
+                                  con.MailingStreet = acc.BillingStreet;
+                                  con.MailingPostalCode = acc.BillingPostalCode;
+                                  conList.add(con);
+                            }
+                            update conList;
+    }
 }
