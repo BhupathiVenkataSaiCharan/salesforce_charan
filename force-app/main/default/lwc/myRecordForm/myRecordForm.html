@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Lightning Record Form to View and Update record">
+        <lightning-record-form
+            object-api-name="Account"
+            fields={fields}
+            onsuccess={handleSuccess}
+            onerror={handleError}
+            mode="edit">
+        </lightning-record-form>
+    </lightning-card>
+</template>

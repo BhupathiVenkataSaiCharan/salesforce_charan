@@ -8,6 +8,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class CustomOpportunityCRUD extends LightningElement {
     @track rows=[];
     deletedRowIds = [];
+    updatedRecord;
 
     // isChecked = false;
     value = 'No';      
@@ -108,6 +109,11 @@ export default class CustomOpportunityCRUD extends LightningElement {
             variant: variant
         });
         this.dispatchEvent(event);
+    }
+
+    handleSuccess(event){
+        console.log('event:', event);
+        this.updatedRecord = event.detail.id;
     }
 
 }

@@ -8,10 +8,6 @@ export default class ParentDecorator extends LightningElement {
     }
 
     handleSubmit(){
-        const childComponent = this.template.querySelector("c-child-decorator");
-
-        if(childComponent){
-            childComponent.receivedMessage = this.parentMessage;
-        }
+        this.template.querySelector("c-child-decorator").receivedMessage = this.parentMessage;
     }
 }

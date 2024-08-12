@@ -20,10 +20,8 @@ public class LeadTriggerHandler {
         Set<String> emails = new Set<String>();
 
         for(Lead ld : existingLeads){
-            // if(ld.Email != null){
-                names.add(ld.LastName);
-                emails.add(ld.Email);
-            // }
+            names.add(ld.LastName);
+            emails.add(ld.Email);
         }
 
         for(Lead ld : ldList){

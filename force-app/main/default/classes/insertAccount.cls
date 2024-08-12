@@ -10,6 +10,5 @@ public class insertAccount {
             accList.add(acc);
         }
         insert accList;
-       
     }
 }
