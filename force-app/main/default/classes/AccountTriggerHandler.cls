@@ -326,4 +326,89 @@ public static void changeRelatedAccount(List<Account> accList){
                             }
                             update conList;
     }
+
+    //prevent account from deletion if contacts are associated
+    public static void preventAccountdeletion(List<Account> accList){
+        
+        Set<Id> accIds = new Set<Id>();
+
+        for(Contact con : [SELECT Id,AccountId FROM Contact]) {
+            accIds.add(con.AccountId);
+        }
+
+        for(Account acc : accList){
+            if(accIds.contains(acc.Id)){
+                acc.addError('Account has related contacts');
+            }
+        }
+    }
+
+
+    //Create Contacts equal to number of contacts field
+    public static void createContacts(List<Account> accList){
+        
+        List<Contact> conList = new List<Contact>();
+
+        for(Account acc : accList){
+            if(acc.Number_of_Contacts__c != null){
+                Integer count = (Integer)acc.Number_of_Contacts__c; 
+                for(Integer i=0; i<count; i++){
+                    Contact con = new Contact(
+                        LastName = acc.Name + i,
+                        AccountId = acc.Id
+                    );
+                    conList.add(con);
+                }
+            }
+        }
+        insert conList;
+    }
+
+    //update contact count if count decreased
+    // public static void updateLowContacts(List<Account> accList){
+    //     Integer newCount;
+    //     for(Account acc : accList){
+    //         Account oldCount = (Account)Trigger.oldMap.get(acc.Id);
+    //         if(acc.Number_of_Contacts__c != oldCount.Number_of_Contacts__c && acc.Number_of_Contacts__c < oldCount.Number_of_Contacts__c){
+    //             newCount = (Integer)(oldCount.Number_of_Contacts__c - acc.Number_of_Contacts__c);
+    //         }
+    //     }
+    //     List<Contact> conList = [SELECT Id,AccountId FROM Contact WHERE AccountId IN :accList ORDER BY CreatedDate DESC OFFSET :newCount ];
+    //     List<Contact> extraCons = new List<Contact>();
+    //     for(Contact con: conList){
+    //         extraCons.add(con);
+    //     }
+    //     delete extraCons;
+    // }
+
+    //update contact count if count increased
+    public static void updateHighContacts(List<Account> accList){
+
+        Integer newCount;
+        List<Contact> conList = new List<Contact>();
+        List<Contact> conDelList = new List<Contact>();
+
+        for(Account acc : accList){
+            Account oldCount = (Account)Trigger.oldMap.get(acc.Id);
+            if(acc.Number_of_Contacts__c != oldCount.Number_of_Contacts__c && acc.Number_of_Contacts__c > oldCount.Number_of_Contacts__c){
+                newCount = (Integer)(acc.Number_of_Contacts__c - oldCount.Number_of_Contacts__c);
+                for(Integer i=0;i<newCount;i++){
+                    Contact con = new Contact(
+                        LastName = acc.Name + i,
+                        AccountId = acc.Id
+                    );
+                    conList.add(con);
+                }
+            }else if(acc.Number_of_Contacts__c != null && acc.Number_of_Contacts__c < oldCount.Number_of_Contacts__c){
+                newCount = (Integer)(oldCount.Number_of_Contacts__c - acc.Number_of_Contacts__c);
+                List<Contact> extraCons = [SELECT Id,AccountId FROM Contact WHERE AccountId = :acc.Id ORDER BY CreatedDate DESC LIMIT :newCount];
+                for(Contact con : extraCons){
+                    conDelList.add(con);
+                }
+            }
+        }
+        insert conList;
+        delete conDelList;
+    }
+
 }

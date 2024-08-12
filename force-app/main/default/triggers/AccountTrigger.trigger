@@ -13,26 +13,30 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.associateAccountwithContact(trigger.new);
             // AccountTriggerHandler.createContactOpportunity(trigger.new);
             // AccountTriggerHandler.associateContactsWithExistingAccount(trigger.newMap);
-            AccountTriggerHandler.changeRelatedAccount(trigger.new);
+            // AccountTriggerHandler.changeRelatedAccount(trigger.new);
+            AccountTriggerHandler.createContacts(trigger.new);
         }
         when BEFORE_UPDATE{
             system.debug('checkpoint for before update');
             // AccountTriggerHandler.copyBillingToShipping(trigger.new);
-            AccountTriggerHandler.updatePhone(trigger.new);
+            // AccountTriggerHandler.updatePhone(trigger.new);
             // AccountTriggerHandler.cannotUpdate(trigger.new);
         }
         when AFTER_UPDATE{
             system.debug('checkpoint trigger.isUpdate');
             // AccountTriggerHandler.createContactWhenAccountisUpdated(trigger.new,trigger.newMap);
             // AccountTriggerHandler.updateDescription(trigger.new,trigger.old);
-            AccountTriggerHandler.updateConAddrWhenAccAddrUpdated(trigger.new);
+            // AccountTriggerHandler.updateConAddrWhenAccAddrUpdated(trigger.new);                 //given by nagalakshmi
+            // AccountTriggerHandler.updateLowContacts(trigger.new);
+            AccountTriggerHandler.updateHighContacts(trigger.new);
         }
         when BEFORE_DELETE{
             system.debug('checkpoint trigger.isDelete');
             // AccountTriggerHandler.onAccountDelete(trigger.old);
             // AccountTriggerHandler.stopDelete(trigger.old);
             // AccountTriggerHandler.allowDeletion(trigger.old);
-            AccountTriggerHandler.cannotDelete(trigger.old);
+            // AccountTriggerHandler.cannotDelete(trigger.old);
+            AccountTriggerHandler.preventAccountdeletion(trigger.old);                          //given by nagalakshmi
         }
     }
 }
