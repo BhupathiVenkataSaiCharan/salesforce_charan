@@ -28,7 +28,7 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.updateDescription(trigger.new,trigger.old);
             // AccountTriggerHandler.updateConAddrWhenAccAddrUpdated(trigger.new);                 //given by nagalakshmi
             // AccountTriggerHandler.updateLowContacts(trigger.new);
-            AccountTriggerHandler.updateHighContacts(trigger.new);
+            AccountTriggerHandler.updateContacts(trigger.new);
         }
         when BEFORE_DELETE{
             system.debug('checkpoint trigger.isDelete');

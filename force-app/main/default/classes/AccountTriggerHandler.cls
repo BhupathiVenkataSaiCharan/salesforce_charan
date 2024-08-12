@@ -364,25 +364,8 @@ public static void changeRelatedAccount(List<Account> accList){
         insert conList;
     }
 
-    //update contact count if count decreased
-    // public static void updateLowContacts(List<Account> accList){
-    //     Integer newCount;
-    //     for(Account acc : accList){
-    //         Account oldCount = (Account)Trigger.oldMap.get(acc.Id);
-    //         if(acc.Number_of_Contacts__c != oldCount.Number_of_Contacts__c && acc.Number_of_Contacts__c < oldCount.Number_of_Contacts__c){
-    //             newCount = (Integer)(oldCount.Number_of_Contacts__c - acc.Number_of_Contacts__c);
-    //         }
-    //     }
-    //     List<Contact> conList = [SELECT Id,AccountId FROM Contact WHERE AccountId IN :accList ORDER BY CreatedDate DESC OFFSET :newCount ];
-    //     List<Contact> extraCons = new List<Contact>();
-    //     for(Contact con: conList){
-    //         extraCons.add(con);
-    //     }
-    //     delete extraCons;
-    // }
-
     //update contact count if count increased
-    public static void updateHighContacts(List<Account> accList){
+    public static void updateContacts(List<Account> accList){
 
         Integer newCount;
         List<Contact> conList = new List<Contact>();
