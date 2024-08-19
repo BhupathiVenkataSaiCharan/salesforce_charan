@@ -10,17 +10,17 @@ public class OpportunityTriggerHandler {
     }
 
     //populate the amount of the recently created opportunity in the related account 'recent opportunity amount' field
-    public static void sendLatestAmount(List<Opportunity> oppList){
+    //public static void sendLatestAmount(List<Opportunity> oppList){
         
-        List<Account> accList=new List<Account>();
-        for(Opportunity opp:oppList){
-            if(opp.Amount != null){
-                Account acc=new Account(id=opp.AccountId,Recent_Opportunity_Amount__c=opp.Amount);
-                accList.add(acc);
-            }
-        }
-        update accList;
-    }
+    //     List<Account> accList=new List<Account>();
+    //     for(Opportunity opp:oppList){
+    //         if(opp.Amount != null){
+    //             Account acc=new Account(id=opp.AccountId,Recent_Opportunity_Amount__c=opp.Amount);
+    //             accList.add(acc);
+    //         }
+    //     }
+    //     update accList;
+    // }
 
     //error if amount is null while creating an opportunity
     public static void nullAmount(List<Opportunity> oppList){
@@ -45,4 +45,69 @@ public class OpportunityTriggerHandler {
             }
         }
     }
+
+    //update the account field Opportunity_Closedwon_count__c	with the sum of opportunity amount whose stage is closed won
+    public static void OppClosedWonCountInAcc(List<Opportunity> oppList){
+        
+        Set<Id> accIds = new Set<Id>();
+        for(Opportunity opp : oppList){
+            if(opp.AccountId != null){
+                accIds.add(opp.AccountId);
+            }
+        }
+
+        List<Account> accList = new List<Account>();
+        for(AggregateResult aggr : [SELECT AccountId,SUM(Amount)totalAmount FROM Opportunity WHERE AccountId IN :accIds GROUP BY AccountId]){
+            accList.add(new Account(
+                Id = (Id)aggr.get('AccountId'),
+                Opportunity_Closedwon_count__c = (Decimal)aggr.get('totalAmount')
+            ));
+        }
+        if(!accList.isEmpty()){
+            update accList;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Set<Id> accIds = new Set<Id>();
+        // for(Opportunity opp : oppList){
+        //     if(opp.StageName == 'Closed Won' && opp.AccountId != null){
+        //         accIds.add(opp.AccountId);
+        //     }
+        // }
+
+        // List<AggregateResult> aggr = [SELECT AccountId, SUM(Amount) totalAmount 
+        //                                 FROM Opportunity 
+        //                                 WHERE StageName = 'Closed Won' 
+        //                                 AND AccountId IN :accIds
+        //                                 GROUP BY AccountId];
+
+        // List<Account> accList = new List<Account>();                                
+        // for(AggregateResult agg : aggr){
+        //     Account acc = new Account(
+        //         Id = (Id)agg.get('AccountId'),
+        //         Amount_of_ClosedWon__c	= (Decimal)agg.get('totalAmount')
+        //     );
+        //     accList.add(acc);
+        // }
+        // update accList;
+    }    
 }

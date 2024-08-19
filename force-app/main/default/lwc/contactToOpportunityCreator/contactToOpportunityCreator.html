@@ -15,7 +15,7 @@
             <lightning-button label="Create Opportunities" variant="brand" onclick={openOpps}></lightning-button>
         </template>
         <template if:true={isOpps}>
-            <template for:each={conList} for:item="cons">
+            <!-- <template for:each={conList} for:item="cons">
                 <div key={cons.Id}>
                     <lightning-record-edit-form object-api-name="Opportunity">
                         <lightning-card title="New Opportunity">
@@ -27,7 +27,20 @@
                     </lightning-record-edit-form>
                 </div>
             </template>
-            <lightning-button variant="brand" label="Create opp" type="submit" onclick={createGroup}></lightning-button>    
+            <lightning-button variant="brand" label="Create opp" type="submit" onclick={createGroup}></lightning-button>     -->
+
+            <!-- lightning data table for new opportunities -->
+            <lightning-card title="Opp datatable">
+                <lightning-datatable 
+                    key-field="Id" 
+                    data={conList} 
+                    columns={oppColumns}
+                    hide-checkbox-column="true"
+                    onsave={handleSave}
+                    draft-values={draftValues}>
+                </lightning-datatable>
+            </lightning-card>
+            
         </template>
         
     </lightning-card>

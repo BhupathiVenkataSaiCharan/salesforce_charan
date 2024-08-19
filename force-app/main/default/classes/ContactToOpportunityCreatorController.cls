@@ -12,4 +12,12 @@ public class ContactToOpportunityCreatorController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    @AuraEnabled
+    public static void createOpportunities(List<Opportunity> oppList){
+        try {
+            Database.insert(oppList);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }

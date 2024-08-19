@@ -1,0 +1,38 @@
+<template>
+    <div>
+        <div class="background-container" style={backgroundStyle}></div>
+        <template if:true={slide1}>
+            <div class="formdetails">
+                <lightning-combobox 
+                    name="place" value={value} label="Place To Visit" options={options} onchange={handleChange}>
+                </lightning-combobox>
+    
+                <lightning-input
+                    type="date" name="traveldate" label="Trip Date" value={tDate} onchange={handleChange}>
+                </lightning-input>
+    
+                <lightning-input
+                    type="number" name="totaldays" label="Number of Days" value={tDays} min="1" onchange={handleChange}>
+                </lightning-input>
+    
+                <lightning-input
+                    type="number" name="totalpeople" label="Number of People" value={tPeople} min="1" onchange={handleChange}>
+                </lightning-input>
+                <br>
+                <lightning-button label="Submit" variant="brand" onclick={handleSubmit}></lightning-button>
+            </div>
+        </template>
+        <template if:true={ifGoa}>
+            <p>Goa slide</p>
+        </template>
+        <template if:true={ifAndaman}>
+            <p>Andaman slide</p>
+        </template>
+        <template if:true={ifThailand}>
+            <p>Thailand slide</p>
+        </template>
+        <template if:true={ifKorea}>
+            <p>Korea slide</p>
+        </template>
+    </div>
+</template>

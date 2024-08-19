@@ -1,0 +1,11 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling */
+}
+
+.background-container {
+    height: 50vh; /* Adjust as needed */
+    width: 100%; /* Adjust as needed */
+    background-size: cover; /* Adjust as needed */
+    background-position: center; /* Adjust as needed */
+}

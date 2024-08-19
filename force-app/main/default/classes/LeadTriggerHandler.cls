@@ -1,17 +1,6 @@
 public class LeadTriggerHandler {
     
-    //when source = web rating = 'cold' else 'hot'
-    public static void onLeadSource(List<Lead> ldList){
-        for(Lead ld:ldList){
-            if(ld.LeadSource == 'web'){
-                ld.Rating = 'cold';
-            }else{
-                ld.Rating = 'hot';
-            }
-        }
-    }
-
-    // chekc for duplicate records in lead based on email and name
+    // check for duplicate records in lead based on email and name
 
     public static void checkDuplicateNameEmail(List<Lead> ldList){
 
@@ -27,6 +16,17 @@ public class LeadTriggerHandler {
         for(Lead ld : ldList){
             if(names.contains(ld.LastName) || emails.contains(ld.Email)){
                 ld.addError('Duplicate value exists');
+            }
+        }
+    }
+
+    // when lead source is web then rating is cold or else hot
+    public static void leadSourceBasedRating(List<Lead> ldList){
+        for(Lead ld : ldList){
+            if(ld.LeadSource == 'Web'){
+                ld.Rating = 'Cold';
+            }else{
+                ld.Rating = 'Hot';
             }
         }
     }

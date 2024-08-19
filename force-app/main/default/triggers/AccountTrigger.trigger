@@ -8,19 +8,21 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
         }
         when AFTER_INSERT{
             system.debug('checkpoint trigger.isInsert.isAfter');
-                system.debug('checkpoint trigger.isInsert.isAfter.Banking');
-                // AccountTriggerHandler.createContactWhenAccountisCreated(trigger.new);
-            // AccountTriggerHandler.associateAccountwithContact(trigger.new);
             // AccountTriggerHandler.createContactOpportunity(trigger.new);
             // AccountTriggerHandler.associateContactsWithExistingAccount(trigger.newMap);
             // AccountTriggerHandler.changeRelatedAccount(trigger.new);
-            AccountTriggerHandler.createContacts(trigger.new);
+            // AccountTriggerHandler.createContacts(trigger.new);
+            // AccountTriggerHandler.accountRelatedContact(trigger.new);
+            // AccountTriggerHandler.CreateAccountRelatedConAndOpp(trigger.new);
         }
         when BEFORE_UPDATE{
             system.debug('checkpoint for before update');
             // AccountTriggerHandler.copyBillingToShipping(trigger.new);
             // AccountTriggerHandler.updatePhone(trigger.new);
             // AccountTriggerHandler.cannotUpdate(trigger.new);
+            // AccountTriggerHandler.ifNumberChanged(trigger.new);
+            // AccountTriggerHandler.updatePhoneInContact(trigger.new);
+            // AccountTriggerHandler.preventAccountEditIfCreated7DaysAgo(trigger.old);
         }
         when AFTER_UPDATE{
             system.debug('checkpoint trigger.isUpdate');
@@ -28,7 +30,7 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.updateDescription(trigger.new,trigger.old);
             // AccountTriggerHandler.updateConAddrWhenAccAddrUpdated(trigger.new);                 //given by nagalakshmi
             // AccountTriggerHandler.updateLowContacts(trigger.new);
-            AccountTriggerHandler.updateContacts(trigger.new);
+            // AccountTriggerHandler.updateContacts(trigger.new);
         }
         when BEFORE_DELETE{
             system.debug('checkpoint trigger.isDelete');
@@ -36,7 +38,9 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.stopDelete(trigger.old);
             // AccountTriggerHandler.allowDeletion(trigger.old);
             // AccountTriggerHandler.cannotDelete(trigger.old);
-            AccountTriggerHandler.preventAccountdeletion(trigger.old);                          //given by nagalakshmi
+            // AccountTriggerHandler.preventAccountdeletion(trigger.old);                          //given by nagalakshmi
+            // AccountTriggerHandler.preventDeletionIfActive(trigger.old);
+            
         }
     }
 }

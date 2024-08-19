@@ -1,26 +1,37 @@
 public class caseTriggerHandler {
     
-    //when case origin=email set status = new and priority = medium
-    public static void onCaseOrigin(List<Case> csList){
-        for(Case cs:csList){
-            if(cs.Origin == 'email'){
-                cs.Status='new';
-                cs.Priority='medium';
+    //when case origin is email set status as new and priority as medium
+    public static void originBasedStatusPriority(List<Case> csList){
+        for(Case cs : csList){
+            if(cs.Origin == 'Email'){
+                cs.Status = 'New';
+                cs.Priority = 'Medium';
             }
         }
     }
 
-    //when a case is created on any account put the latest case number on account in 'latest case number' field
-    public static void sendLatestCaseNumber(List<Case> csList){
-        List<Account> accList= new List<Account>(); 
-        for(Case cs:csList){
+    //corrected version for populating latest case number on associated account
+    public static void latestCaseNumberOnAccount(List<Case> csList){
 
+        Set<Id> accountIds = new Set<Id>();
+        for(Case cs : csList){
             if(cs.AccountId != null){
-                system.debug('case number' +cs.CaseNumber);
-                Account acc=new Account(Id=cs.AccountId,Latest_Case_Number__c = cs.CaseNumber);
-                accList.add(acc);
-            }    
+                accountIds.add(cs.AccountId);
+            }
         }
-        update accList;
-    }   
+
+        List<Account> accList = new List<Account>();
+        for(Id accId : accountIds){
+            Case latestCase = [SELECT CaseNumber FROM Case WHERE AccountId = :accId ORDER BY CaseNumber DESC LIMIT 1];
+
+            Account acc = new Account(
+                Id = accId,
+                Latest_Case_Number__c = latestCase.CaseNumber
+            );
+            accList.add(acc);
+        }
+        if(!accList.isEmpty()){
+            update accList;
+        }
+    }
 }
