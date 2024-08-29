@@ -20,6 +20,7 @@ trigger ContactTrigger on Contact (before insert,after insert, before update, af
             //     }
             //}
             // ContactTriggerHandler.checkForDuplicate(trigger.new);
+            // ContactTriggerHandler.ifEmailNull(trigger.new);
         }
         when AFTER_INSERT{
             ContactTriggerHandler.updateAccountStatus(trigger.new);

@@ -44,4 +44,14 @@ public class ContactTriggerHandler {
         }
         update accList;
     }
+
+
+    // use custom label if email field is empty in trigger
+    public static void ifEmailNull(List<Contact> conList){
+        for(Contact con : conList){
+            if(con.Email == null){
+                con.Email.addError(label.If_Email_Field_is_Empty);
+            }
+        }
+    }
 }

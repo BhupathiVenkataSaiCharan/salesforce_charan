@@ -57,7 +57,7 @@ public class OpportunityTriggerHandler {
         }
 
         List<Account> accList = new List<Account>();
-        for(AggregateResult aggr : [SELECT AccountId,SUM(Amount)totalAmount FROM Opportunity WHERE AccountId IN :accIds GROUP BY AccountId]){
+        for(AggregateResult aggr : [SELECT AccountId,SUM(Amount)totalAmount FROM Opportunity WHERE stageName = 'Closed Won' AND AccountId IN :accIds GROUP BY AccountId]){
             accList.add(new Account(
                 Id = (Id)aggr.get('AccountId'),
                 Opportunity_Closedwon_count__c = (Decimal)aggr.get('totalAmount')
@@ -67,10 +67,34 @@ public class OpportunityTriggerHandler {
             update accList;
         }
         
+    }
         
-        
-        
-        
+      
+    
+    //Populate the opportunity name with highest amount related to account
+    public static void highestAmountOppName(List<Opportunity> oppList){
+
+        Set<Id> accIds = new Set<Id>();
+        for(Opportunity opp : oppList){
+            if(opp.AccountId != null){
+                accIds.add(opp.AccountId);
+            }
+        }
+
+        List<Account> listName = new List<Account>();
+        for(Account acc : [SELECT Id,(SELECT Id, Name, Amount FROM Opportunities ORDER BY Amount DESC LIMIT 1) FROM Account WHERE Id IN :accIds]){
+            if(acc.Opportunities.size()>0){
+                Account obj = new Account(
+                    Id = acc.Id,
+                    Max_Opportunity_Name__c = acc.Opportunities[0].Name
+                );
+                listName.add(obj);                
+            }          
+        }
+        if(!listName.isEmpty()){
+            update listName;
+        }
+    }
         
         
         
@@ -109,5 +133,4 @@ public class OpportunityTriggerHandler {
         //     accList.add(acc);
         // }
         // update accList;
-    }    
 }

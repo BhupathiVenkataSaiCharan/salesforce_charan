@@ -92,6 +92,20 @@ public class AccountTriggerHandler {
     }
 
 
+    //copy billing address to shipping address on creation or updation
+    public static void copyAddress(List<Account> accList){
+        for (Account acc : accList) {
+            if(acc.BillingStreet != null || acc.BillingCity != null || acc.BillingPostalCode != null 
+                || acc.BillingState != null || acc.BillingCountry != null){
+                    acc.ShippingStreet = acc.BillingStreet;
+                    acc.ShippingCity = acc.BillingCity;
+                    acc.ShippingPostalCode = acc.BillingPostalCode;
+                    acc.ShippingState = acc.BillingState;
+                    acc.ShippingCountry = acc.BillingCountry;
+                }
+        }
+    }
+
 
 
  
@@ -469,5 +483,26 @@ public class AccountTriggerHandler {
         insert conList;
         delete conDelList;
     }
+
+    //populate the sales rep text field with the name of account owner 
+    public static void ownerAsSalesRep(List<Account> accList){
+
+        Set<String> ownerIds = new Set<String>();
+        for(Account acc : accList){
+            ownerIds.add(acc.OwnerId);
+        }
+
+        Map<Id, String> ownerNames = new Map<Id, String>();
+        for(User u : [SELECT Id,Name FROM User WHERE Id IN :ownerIds]){
+            ownerNames.put(u.Id, u.Name);
+        }
+
+        for(Account acc : accList){
+            if(ownerNames.containsKey(acc.OwnerId)){
+                acc.Sales_Rep__c = ownerNames.get(acc.OwnerId);
+            }
+        }
+    }
+
 
 }

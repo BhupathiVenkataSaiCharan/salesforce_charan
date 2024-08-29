@@ -10,4 +10,11 @@
 // System.debug('My name is ' + tempvar);
 
 
-system.debug('demo');
+//to run the LeadWebServiceClient apex class which will make call to LeadWebService restresource class and create lead records 
+
+List<Map<String,Object>> leadList = new List<Map<String,Object>>();
+Map<String,Object> leadMap = new Map<String,Object>();
+leadMap.put('lastName','aman');
+leadMap.put('company','test company');
+leadList.add(leadMap);
+LeadWebServiceClient.createLeadFromClient(leadList);

@@ -2,6 +2,7 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
     switch on trigger.OperationType{
         when BEFORE_INSERT{
             system.debug('checkpoint trigger.isInsert.isBefore');
+            AccountTriggerHandler.ownerAsSalesRep(trigger.new);
             // AccountTriggerHandler.updateIndustryRating(trigger.new);
             // AccountTriggerHandler.copyBillingToShipping(trigger.new);
             // AccountTriggerHandler.accRating(trigger.new);
@@ -17,6 +18,7 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
         }
         when BEFORE_UPDATE{
             system.debug('checkpoint for before update');
+            AccountTriggerHandler.ownerAsSalesRep(trigger.new);
             // AccountTriggerHandler.copyBillingToShipping(trigger.new);
             // AccountTriggerHandler.updatePhone(trigger.new);
             // AccountTriggerHandler.cannotUpdate(trigger.new);
