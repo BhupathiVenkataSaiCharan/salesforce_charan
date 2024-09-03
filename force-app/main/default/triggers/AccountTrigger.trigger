@@ -15,16 +15,18 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.createContacts(trigger.new);
             // AccountTriggerHandler.accountRelatedContact(trigger.new);
             // AccountTriggerHandler.CreateAccountRelatedConAndOpp(trigger.new);
+            AccountTriggerHandler.updateConMailing(trigger.newMap);
         }
         when BEFORE_UPDATE{
             system.debug('checkpoint for before update');
-            AccountTriggerHandler.ownerAsSalesRep(trigger.new);
+            // AccountTriggerHandler.ownerAsSalesRep(trigger.new);
             // AccountTriggerHandler.copyBillingToShipping(trigger.new);
             // AccountTriggerHandler.updatePhone(trigger.new);
             // AccountTriggerHandler.cannotUpdate(trigger.new);
             // AccountTriggerHandler.ifNumberChanged(trigger.new);
             // AccountTriggerHandler.updatePhoneInContact(trigger.new);
             // AccountTriggerHandler.preventAccountEditIfCreated7DaysAgo(trigger.old);
+            // AccountTriggerHandler.updateDescription(trigger.new);
         }
         when AFTER_UPDATE{
             system.debug('checkpoint trigger.isUpdate');
@@ -33,6 +35,8 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.updateConAddrWhenAccAddrUpdated(trigger.new);                 //given by nagalakshmi
             // AccountTriggerHandler.updateLowContacts(trigger.new);
             // AccountTriggerHandler.updateContacts(trigger.new);
+            // AccountTriggerHandler.updateRelatedContactPhone(trigger.newMap);
+            AccountTriggerHandler.updateConMailing(trigger.newMap);
         }
         when BEFORE_DELETE{
             system.debug('checkpoint trigger.isDelete');
@@ -42,6 +46,7 @@ trigger AccountTrigger on Account (before insert,after insert,before update,afte
             // AccountTriggerHandler.cannotDelete(trigger.old);
             // AccountTriggerHandler.preventAccountdeletion(trigger.old);                          //given by nagalakshmi
             // AccountTriggerHandler.preventDeletionIfActive(trigger.old);
+            AccountTriggerHandler.preventAccDelete(trigger.old);
             
         }
     }

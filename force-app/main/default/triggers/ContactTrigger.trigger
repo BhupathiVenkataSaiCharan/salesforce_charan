@@ -31,7 +31,7 @@ trigger ContactTrigger on Contact (before insert,after insert, before update, af
             
         }
         when AFTER_UPDATE{
-            ContactTriggerHandler.updateAccountStatus(trigger.new);
+            // ContactTriggerHandler.updateAccountStatus(trigger.new);
         }
 
         when AFTER_DELETE{

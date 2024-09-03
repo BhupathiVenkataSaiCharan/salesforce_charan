@@ -204,6 +204,87 @@ public class AccountTriggerHandler {
         }
     }
 
+    //populate account description with old and new mobile value
+    public static void updateDescription(List<Account> accList){
+
+        for(Account acc : accList){
+            Account oldMap = (Account)Trigger.oldMap.get(acc.Id);
+            if(acc.Phone != oldMap.Phone){
+                acc.Description = 'Phone number is Updated from ' + oldMap.Phone + ' to ' + acc.Phone ;
+            }
+        }
+    }
+
+ 
+    //if account phone updated, update related contact phone field  (Using newMap directly get the new map instead of comparing old and new value)
+    public static void updateRelatedContactPhone(Map<Id,Account> accMap){
+
+        List<Contact> conList = new List<Contact>();
+        for(Contact con : [SELECT Id,AccountId FROM Contact WHERE AccountId IN :accMap.keySet()]){
+            con.Phone = accMap.get(con.AccountId).Phone;
+            conList.add(con);
+        }
+        if(!conList.isEmpty()){
+            update conList;
+        }
+    }
+
+ 
+    //update contact mailing address when account billing address is changed
+    public static void updateConMailing(Map<Id, Account> accMap){
+        
+        List<Contact> conList = new List<Contact>();
+        for(Contact con : [SELECT Id,AccountId FROM Contact WHERE AccountId IN :accMap.keySet()]){
+            con.MailingCity = accMap.get(con.AccountId).BillingCity;
+            con.MailingCountry = accMap.get(con.AccountId).BillingCountry;
+            con.MailingState = accMap.get(con.AccountId).BillingState;
+            con.MailingStreet = accMap.get(con.AccountId).BillingStreet;
+            con.MailingPostalCode = accMap.get(con.AccountId).BillingPostalCode;
+            conList.add(con);
+        }
+        if(!conList.isEmpty()){
+            update conList;
+        }
+    }
+
+
+    //account can be deleted only if user is system admin
+    public static void preventAccDelete(List<Account> accList){
+        
+        Set<Id> adminIds = new Set<Id>();
+        for(Profile pr : [SELECT Id FROM Profile WHERE Name = 'System Administrator']){
+            adminIds.add(pr.Id);
+        }
+
+        for(Account acc : accList){
+            if(adminIds.contains(UserInfo.getProfileId())){
+                acc.addError('Only Admins has the access to delete account records');
+            }
+        }
+    }
+
+
+    //prevent account deletion if opps are assoicated
+    public static void stopDeleteIfHavingOpps(List<Account> accList){
+
+        Set<Id> accIds = new Set<Id>();
+        for(Opportunity opp : [SELECT Id,AccountId FROM Opportunity WHERE AccountId != null]){
+            accIds.add(opp.AccountId)
+        }
+
+        for(Account acc : accList){
+            if(accIds.contains(acc.Id)){
+                acc.addError('Account has Opportunities, so cannot be delete');
+            }
+        }
+
+    }
+
+
+
+
+
+    //create account related contact and opportunity
     public static void createContactOpportunity(List<Account> accList){
 
         List<Contact> conList=new List<Contact>();
