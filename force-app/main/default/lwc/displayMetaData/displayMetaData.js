@@ -1,45 +1,57 @@
 import { LightningElement, wire, api } from 'lwc';
-import getOppValues from '@salesforce/apex/MetaDataOppValues.getOppValues';
+import getMetaData from '@salesforce/apex/MetaDataOppValues.getMetaData';
+import updateOppRecords from '@salesforce/apex/MetaDataOppValues.updateOppRecords';
 
 export default class DisplayMetaData extends LightningElement {
     
+    data = [];
+    error;
+    selectedData = [];
+
     @api recordId;
 
-    data = [];
-    selectedValues = [];
-
-    @wire(getOppValues)
-    wiredMetaData({data,error}){
+    @wire(getMetaData)
+    wiredData({data,error}){
         if(data){
             this.data = data;
-            console.log('Data ==> ', this.data);   
-            alert('recordId ==> ', this.recordId);
+            console.log('Data ==> ', this.data);
         }else{
-            console.log('Error');
+            this.error = error;
+            console.log('Error ==>', this.error);
         }
     }
-
+ 
     handleCheck(event){
-        
-        console.log('event ==> ', event.target.dataset.id);
-        console.log('event ==> ', event.target.dataset.label);
+
+        console.log('metadata Id ==> ', event.target.dataset.id) ;
+        console.log('metadata Label ==> ', event.target.dataset.label) ;
 
         const mId = event.target.dataset.id;
         const mLabel = event.target.dataset.label;
 
         if(event.target.checked){
-            this.selectedValues.push({
+            this.selectedData.push({
                 Id : mId,
-                Label : mLabel,
-                recId : this.recordId
+                Label : mLabel
             });
         }else{
-           this.selectedValues = this.selectedValues.filter(item => item.Id !== mId);
+            this.selectedData = this.selectedData.filter(item => item.Id !== mId);
         }
     }
 
+
     handleSave(){
-        console.log('Selected Values ==> ', JSON.stringify(this.selectedValues));
+        console.log('Selected List of Meta Data Values ==> ', JSON.stringify(this.selectedData));
         console.log('recordId ==> ', this.recordId);
+
+        updateOppRecords({oppId : this.recordId, jsonData : JSON.stringify(this.selectedData)})
+        .then(()=>{
+            alert('Successfully Updated Opportunity')
+        })
+        .catch((error)=>{
+            alert('Failed to Update');
+        })
+        
     }
+    
 }

@@ -1,14 +1,12 @@
 <template>
-    <lightning-card title="Display Meta Data Records">
-
-        <template if:true={data}>
-            <template for:each={data} for:item="value">
-                <lightning-input type="checkbox" label={value.Test_value__c} 
-                                    key={value.Id} onchange={handleCheck}
-                                        data-id={value.Id} data-label={value.Test_value__c}></lightning-input>
-            </template> 
-        </template>
-
-        <lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
+    <lightning-card title="Display Meta Data as Checkbox List">
+            <template if:true={data}>
+                <template for:each={data} for:item="value">
+                    <lightning-input type="checkbox" key={value.Id} label={value.Test_value__c}
+                                        data-id={value.Id} data-label={value.Test_value__c}
+                                            onchange={handleCheck}></lightning-input>
+                </template>
+            </template>
+            <lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
     </lightning-card>
 </template>
