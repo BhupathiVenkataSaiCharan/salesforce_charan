@@ -13,7 +13,7 @@ private class CreateAccountRelatedContactTest {
 
     @isTest
     private static void TestCreateContactValid(){
-        String accId = testData();
+        String accId = testData(); 
         Test.startTest();
         String newContact = CreateAccountRelatedContact.createContact(accId,'FName','LName','Dummy@email.com');
         Map<String, Object> auraResult =(Map<String, Object>) JSON.deserializeUntyped(newContact);
