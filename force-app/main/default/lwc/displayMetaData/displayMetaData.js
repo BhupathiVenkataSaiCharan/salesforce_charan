@@ -1,6 +1,7 @@
 import { LightningElement, wire, api } from 'lwc';
 import getMetaData from '@salesforce/apex/MetaDataOppValues.getMetaData';
 import updateOppRecords from '@salesforce/apex/MetaDataOppValues.updateOppRecords';
+import getOpportunityJson from '@salesforce/apex/MetaDataOppValues.getOpportunityJson';
 
 export default class DisplayMetaData extends LightningElement {
     
@@ -9,6 +10,9 @@ export default class DisplayMetaData extends LightningElement {
     selectedData = [];
 
     @api recordId;
+
+    savedData = [];
+    savedError;
 
     @wire(getMetaData)
     wiredData({data,error}){
@@ -20,6 +24,31 @@ export default class DisplayMetaData extends LightningElement {
             console.log('Error ==>', this.error);
         }
     }
+
+
+    @wire(getOpportunityJson,{oppId : '$recordId'})
+    wiredJson({data,error}){
+        if(data){
+            this.savedData = JSON.parse(data);
+            this.preselectCheckbox();
+            console.log('savedData==>', this.savedData);
+        }else{
+            this.savedError = error;
+            console.log('error==>', this.savedError);
+        }
+    }
+
+    preselectCheckbox(){
+        const inputs = this.template.querySelectorAll('lightning-input');
+        inputs.forEach(input=>{
+            const ifSelected = this.savedData.find(item => item.Id === input.dataset.id);
+            if(ifSelected){
+                input.checked = true;
+                this.selectedData.push(ifSelected);
+            }
+        })
+    }
+
  
     handleCheck(event){
 

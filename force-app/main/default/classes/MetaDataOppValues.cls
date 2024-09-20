@@ -23,4 +23,14 @@ public class MetaDataOppValues {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static string getOpportunityJson(String oppId){
+        try {
+            Opportunity opp = [SELECT Id,JSON_Metadata__c FROM Opportunity WHERE Id = :oppId LIMIT 1];
+            return opp.JSON_Metadata__c;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
 }
