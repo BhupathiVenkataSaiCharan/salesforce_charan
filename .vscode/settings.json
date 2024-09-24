@@ -8,5 +8,6 @@
   "salesforce.einsteinForDevelopers.autocompletionLength": "Short",
   "salesforce.einsteinForDevelopers.advanced": {
     
-  }
+  },
+  "salesforce.einsteinForDevelopers.enableAutocompletions": false
 }

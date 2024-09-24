@@ -4,13 +4,22 @@ trigger OpportunityLineItemTrigger on OpportunityLineItem (before insert, after 
         when BEFORE_INSERT{}
         
         when AFTER_INSERT{
-            OpportunityLineItemTriggerHandler.updateOLICountOnAccount(trigger.new);   
+            // OpportunityLineItemTriggerHandler.updateOLICountOnAccount(trigger.new);   
+            OpportunityLineItemTriggerHandler.updateOliCntOnAccWithMultipleOpps(trigger.new);   
         }
         
         when BEFORE_UPDATE{}
-        when AFTER_UPDATE{}
+        
+        when AFTER_UPDATE{
+            OpportunityLineItemTriggerHandler.updateOliCntOnAccWithMultipleOpps(trigger.new);
+        }
+        
         when BEFORE_DELETE{}
-        when AFTER_DELETE{}
+        
+        when AFTER_DELETE{
+            OpportunityLineItemTriggerHandler.updateOliCntOnAccWithMultipleOpps(trigger.old);
+        }
+        
         when AFTER_UNDELETE{}
     }
 }
