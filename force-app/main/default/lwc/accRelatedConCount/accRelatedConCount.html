@@ -1,0 +1,7 @@
+<template>
+    <lightning-card title="Highest Contact count order">
+        <template if:true={data}>
+            <lightning-datatable key-field="Id" data={data} columns={headers} hide-checkbox-column="true"></lightning-datatable>
+        </template>
+    </lightning-card>    
+</template>
