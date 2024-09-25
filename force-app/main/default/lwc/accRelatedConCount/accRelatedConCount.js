@@ -25,7 +25,7 @@ export default class AccRelatedConCount extends LightningElement {
             this.data = data.map(row => {
                 return {
                     ...row,
-                    accountUrl: `/${row.AccountId}` // Construct Account URL 
+                    accountUrl: `/${row.AccountId}` // Construct Account URL  
                 };
             });
             console.log('wire data ', this.data);

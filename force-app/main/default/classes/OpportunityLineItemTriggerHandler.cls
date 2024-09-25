@@ -37,32 +37,29 @@ public class OpportunityLineItemTriggerHandler {
             oppIds.add(oli.OpportunityId);
         }
 
-        Map<Id, Id> idsMap = new Map<Id, Id>();
+        Set<Id> accIds = new Set<Id>();
         for(Opportunity opp : [SELECT Id,AccountId FROM Opportunity WHERE Id IN :oppIds]){
-            idsMap.put(opp.Id, opp.AccountId);
+            accIds.add(opp.AccountId);
         }
 
-        Map<Id, Integer> arCountMap = new Map<Id, Integer>();
-        for(AggregateResult ar : [SELECT OpportunityId,COUNT(Id)lineItemsCount FROM OpportunityLineItem WHERE ListPrice > 50000 AND OpportunityId IN :oppIds GROUP BY OpportunityId]){
-            arCountMap.put((Id)ar.get('OpportunityId'), (Integer)ar.get('lineItemsCount'));
-        }
+        Map<Id, Integer> countMap = new Map<Id, Integer>();
+        for(AggregateResult ar : [SELECT COUNT(Id) cnt, Opportunity.AccountId accId FROM OpportunityLineItem WHERE Opportunity.AccountId IN :accIds AND ListPrice > 50000 GROUP BY Opportunity.AccountId]){
+            
+            Id accountId = (Id)ar.get('accId');
+            Integer count = (Integer)ar.get('cnt');
 
-        Map<Id, Integer> accMap = new Map<Id, Integer>();
-        List<Account> accList = new List<Account>();
-
-        for(Id oppId : arCountMap.keySet()){
-            Id accountId = idsMap.get(oppId);
-            Integer count = arCountMap.get(oppId);
-
-            if(accMap.containsKey(accountId)){
-                accMap.put(accountId,accMap.get(accountId)+count);
+            if(countMap.containsKey(accountId)){
+                countMap.put(accountId, countMap.get(accountId)+count);
             }else{
-                accMap.put(accountId,count);
+                countMap.put(accountId,count);
             }
+        }
 
+        List<Account> accList = new List<Account>();
+        for(Id accId : countMap.keySet()){
             Account acc = new Account(
-                Id = accountId,
-                OLI_Count__c = accMap.get(accountId)
+                Id = accId,
+                Oli_Count__c = countMap.get(accId)
             );
             accList.add(acc);
         }
