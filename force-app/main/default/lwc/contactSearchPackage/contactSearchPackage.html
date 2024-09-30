@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Contacts Search Package for HRSMFC">
+        <lightning-input label="Search Contacts" onchange={handleChange} value={searchValue}></lightning-input>
+        <lightning-button label="Search" variant="brand" onclick={handleClick}></lightning-button>
+        <hr>
+        <template if:true={data}>
+            <lightning-datatable key-field="Id" data={data} columns={columns}></lightning-datatable>
+        </template>
+    </lightning-card>
+</template>

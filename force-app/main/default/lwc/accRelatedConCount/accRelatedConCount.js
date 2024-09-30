@@ -28,13 +28,9 @@ export default class AccRelatedConCount extends LightningElement {
                     accountUrl: `/${row.AccountId}` // Construct Account URL  
                 };
             });
-            console.log('wire data ', this.data);
+            console.log('wire data ', JSON.stringify(this.data));
         }else{
             this.error = error;
         }
-    }
-
-    connectedCallback(){
-        console.log('connectedcallback ');
     }
 }
