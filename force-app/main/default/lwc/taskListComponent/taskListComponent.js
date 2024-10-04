@@ -2,7 +2,7 @@ import { LightningElement, track } from 'lwc';
 
 export default class TaskListComponent extends LightningElement {
     // @track 
-    tasks = []; // Tracked property to hold the list of tasks
+    tasks = ['test1']; // Tracked property to hold the list of tasks
 
     newTask = ''; // Temporary property to hold the new task input
 
@@ -12,7 +12,7 @@ export default class TaskListComponent extends LightningElement {
 
     handleAddTask() {
         if (this.newTask) {
-            this.tasks = [...this.tasks, this.newTask]; // Add the new task to the tasks array
+            this.tasks = [...this.tasks,this.newTask]; // Add the new task to the tasks array
             this.newTask = ''; // Clear the newTask input
         }
     }
