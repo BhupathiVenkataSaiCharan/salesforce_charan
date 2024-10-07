@@ -22,6 +22,7 @@ export default class UserLookupEmail2 extends LightningElement {
     }
 
     sendEmail() {
+        console.log('recordid====> ', this.selectedUserId);
         if (this.selectedUserId) {
             sendEmailToUser({ userId: this.selectedUserId })
                 .then(() => {

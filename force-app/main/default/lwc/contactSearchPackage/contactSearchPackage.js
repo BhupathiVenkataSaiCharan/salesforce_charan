@@ -35,6 +35,4 @@ export default class ContactSearchPackage extends LightningElement {
         console.log('Search term ===> ', this.searchValue);
         this.searchContacts();
     }
-
-
 }
